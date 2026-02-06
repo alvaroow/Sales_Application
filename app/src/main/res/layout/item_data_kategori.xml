@@ -7,13 +7,14 @@
     android:layout_height="wrap_content"
     android:id="@+id/cvCARD_KATEGORI"
     android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="4dp"
+    android:layout_marginVertical="10dp"
+    app:strokeColor="#000000"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    app:cardCornerRadius="15dp"
+    app:cardElevation="6dp"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +26,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -68,9 +70,9 @@
 
             app:chipBackgroundColor="@android:color/transparent"
             app:chipStrokeWidth="1dp"
-            app:chipStrokeColor="#D0D0D0"
+            app:chipStrokeColor="#000000"
 
             app:chipCornerRadius="5dp"
-            app:rippleColor="#E0E0E0"/>
+            app:rippleColor="#000000"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

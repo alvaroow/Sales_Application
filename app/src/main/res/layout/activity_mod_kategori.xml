@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    tools:context="kategori.ModKategori">
+    tools:context=".kategori.ModKategori">
 
     <TextView
         android:id="@+id/tvTambahKate"
@@ -29,6 +29,7 @@
         android:hint="Nama Kategori">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNamaKategori"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>
@@ -41,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tilModKategori_Nama"
-        android:hint="Aktif"
+        android:hint="Status"
         android:layout_marginTop="24dp">
 
         <AutoCompleteTextView

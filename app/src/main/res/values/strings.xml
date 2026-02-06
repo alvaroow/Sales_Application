@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ProjectPenjualan</string>
+    <string-array name="Status">
+        <item>Aktif</item>
+        <item>Non Aktif</item>
+    </string-array>
 </resources>
