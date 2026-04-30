@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579280572450",
+    "project_id": "projectpenjualan-71726551",
+    "storage_bucket": "projectpenjualan-71726551.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579280572450:android:452efee4d259805ad33a7b",
+        "android_client_info": {
+          "package_name": "com.alvaro.projectpenjualan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCveFJ6VKvGa3S_DneaWKBEfiR2ZTwv8VQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,7 +13,7 @@ data class ModelKategori(
         namaKategori = parcel.readString(),
         statusKategori = parcel.readString()
     )
-
+//dontol
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
