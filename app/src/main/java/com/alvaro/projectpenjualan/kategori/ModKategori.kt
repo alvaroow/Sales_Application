@@ -1,6 +1,5 @@
 package com.alvaro.projectpenjualan.kategori
 
-
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -60,9 +59,9 @@ class ModKategori : AppCompatActivity() {
             val key = myRef.push().key
             if (key != null) {
                 val kategoriData = mapOf(
-                    "id" to key,
-                    "nama" to nama,
-                    "status" to status
+                    "idKategori" to key,
+                    "namaKategori" to nama,
+                    "statusKategori" to status
 
                 )
 
