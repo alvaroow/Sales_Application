@@ -45,7 +45,16 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
 
         fun bind(kategori: ModelKategori) {
             tvNamaKategori.text = kategori.namaKategori
+
             val status = kategori.statusKategori
+
+            chipStatus.text = status
+
+            if (status == "Non Aktif") {
+                chipStatus.setChipBackgroundColorResource(R.color.red)
+            } else {
+                chipStatus.setChipBackgroundColorResource(R.color.green)
+            }
 
             itemView.setOnClickListener {
                 listener?.onItemClick(kategori)
