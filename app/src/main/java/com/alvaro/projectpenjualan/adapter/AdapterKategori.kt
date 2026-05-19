@@ -13,51 +13,67 @@ import com.google.android.material.chip.Chip
 class AdapterKategori(private val kategoriList: List<ModelKategori>) :
     RecyclerView.Adapter<AdapterKategori.KategoriViewHolder>() {
 
-    lateinit var appContext: Context
-
-    interface OnItemClickListener {
-        fun onItemClick(kategori: ModelKategori)
-    }
-
     private var listener: OnItemClickListener? = null
+    private var statusListener: OnStatusClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KategoriViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_data_kategori, parent, false)
-        appContext = parent.context
-        return KategoriViewHolder(view)
+    fun setOnStatusClickListener(listener: OnStatusClickListener) {
+        this.statusListener = listener
     }
 
-    override fun onBindViewHolder(holder: KategoriViewHolder, position: Int) {
-        val kategori = kategoriList[position]
-        holder.bind(kategori)
+    interface OnItemClickListener {
+        fun onItemClick(kategori: ModelKategori)
+    }
+
+    interface OnStatusClickListener {
+        fun onStatusClick(kategori: ModelKategori)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KategoriViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_data_kategori, parent, false)
+        return KategoriViewHolder(view)
     }
 
     override fun getItemCount(): Int = kategoriList.size
 
+    override fun onBindViewHolder(holder: KategoriViewHolder, position: Int) {
+        holder.bind(kategoriList[position])
+    }
+
     inner class KategoriViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvNamaKategori: TextView = itemView.findViewById(R.id.tvCARD_KATEGORI_Nama)
-        val chipStatus: Chip = itemView.findViewById(R.id.chipAdd)
+
+        private val tvNamaKategori: TextView =
+            itemView.findViewById(R.id.tvCARD_KATEGORI_Nama)
+
+        private val chipStatus: Chip =
+            itemView.findViewById(R.id.chipAdd)
 
         fun bind(kategori: ModelKategori) {
-            tvNamaKategori.text = kategori.namaKategori
 
-            val status = kategori.statusKategori
+            tvNamaKategori.text = kategori.namaKategori
+            val status = kategori.statusKategori ?: "Aktif"
 
             chipStatus.text = status
 
+            // warna status
             if (status == "Non Aktif") {
                 chipStatus.setChipBackgroundColorResource(R.color.red)
             } else {
                 chipStatus.setChipBackgroundColorResource(R.color.green)
             }
 
+            // klik card
             itemView.setOnClickListener {
                 listener?.onItemClick(kategori)
+            }
+
+
+            chipStatus.setOnClickListener {
+                statusListener?.onStatusClick(kategori)
             }
         }
     }

@@ -11,12 +11,14 @@ class ModelProduk(
     val idCabang: String? = null,
     val fotoProduk: String? = null,
     val stokProduk: Int? = 0,
+
+    var statusProduk: String? = "Aktif",
+
     var createdAt: String? = null,
     var updateAt: String? = null
 ) : Parcelable {
+
     var jumlahTerjual: Int = 0
-        get() = field
-        set(value) { field = value }
 
     constructor(parcel: Parcel) : this(
         idProduk = parcel.readString(),
@@ -26,6 +28,9 @@ class ModelProduk(
         idCabang = parcel.readString(),
         fotoProduk = parcel.readString(),
         stokProduk = parcel.readValue(Int::class.java.classLoader) as? Int,
+
+        statusProduk = parcel.readString(),
+
         createdAt = parcel.readString(),
         updateAt = parcel.readString()
     )
@@ -38,6 +43,9 @@ class ModelProduk(
         parcel.writeString(idCabang)
         parcel.writeString(fotoProduk)
         parcel.writeValue(stokProduk)
+
+        parcel.writeString(statusProduk)
+
         parcel.writeString(createdAt)
         parcel.writeString(updateAt)
     }
@@ -45,8 +53,10 @@ class ModelProduk(
     override fun describeContents(): Int {
         return 0
     }
+
     companion object CREATOR : Parcelable.Creator<ModelProduk> {
-        override fun createFromParcel( parcel: Parcel): ModelProduk {
+
+        override fun createFromParcel(parcel: Parcel): ModelProduk {
             return ModelProduk(parcel)
         }
 

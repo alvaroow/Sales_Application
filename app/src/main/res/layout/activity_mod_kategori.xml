@@ -5,63 +5,121 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:background="#F4F6FB"
+    android:padding="16dp"
     tools:context=".kategori.ModKategori">
 
-    <TextView
-        android:id="@+id/tvTambahKate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tambah Kategori"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- HEADER -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvHeaderMod"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="25dp"
-        android:textSize="25dp"
-        android:textStyle="bold"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilModKategori_Nama"
-        android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1E293B"
+            android:padding="18dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTambahKate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambah Kategori"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kelola kategori produk POS kamu"
+                android:textSize="13sp"
+                android:textColor="#CBD5E1"
+                android:layout_marginTop="6dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- FORM CARD -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvForm"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTambahKate"
-        android:hint="Nama Kategori">
+        android:layout_marginTop="18dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/cvHeaderMod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etNamaKategori"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:orientation="vertical"
+            android:padding="18dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- NAMA -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilModKategori_Nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Kategori"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilModKategori_Status"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tilModKategori_Nama"
-        android:hint="Status"
-        android:layout_marginTop="24dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNamaKategori"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/spModKategori_Status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:labelFor="@id/spModKategori_Status"
-            tools:text=""/>
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- STATUS -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilModKategori_Status"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Status">
 
+                <AutoCompleteTextView
+                    android:id="@+id/spModKategori_Status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:labelFor="@id/spModKategori_Status"
+                    tools:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- BUTTON -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnModKategori_Simpan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Simpan"
-        app:layout_constraintTop_toBottomOf="@id/tilModKategori_Status"
-        android:layout_marginTop="40dp">
-    </com.google.android.material.button.MaterialButton>
-
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:text="Simpan Kategori"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="22dp"
+        app:cornerRadius="16dp"
+        app:backgroundTint="#1E293B"
+        app:layout_constraintTop_toBottomOf="@id/cvForm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class DataKategoriViewModel : ViewModel() {
+
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference("kategori")
+
     val kategoriList = MutableLiveData<ArrayList<ModelKategori>>()
     private var originalKategoriList = ArrayList<ModelKategori>()
-    private val searchQuery = MutableLiveData<String?>()
+
     val isLoading = MutableLiveData<Boolean>()
     val isSearchEmpty = MutableLiveData<Boolean>()
 
@@ -23,50 +25,55 @@ class DataKategoriViewModel : ViewModel() {
 
     fun getData() {
         isLoading.value = true
-        val query = myRef.orderByChild("idKategori").limitToLast(100)
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                isLoading.value = false
-                if (snapshot.exists()) {
+
+        myRef.orderByChild("idKategori").limitToLast(100)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    isLoading.value = false
+
                     val list = ArrayList<ModelKategori>()
+
                     for (dataSnapshot in snapshot.children) {
-                        val kategori = dataSnapshot.getValue(ModelKategori::class.java)
-                        if (kategori == null) {
-                            Log.e("DataKategoriViewModel", "Failed to parse kategori data for snapshot: ${dataSnapshot.key}")
-                        } else {
-                            list.add(kategori)
+                        dataSnapshot.getValue(ModelKategori::class.java)?.let {
+                            list.add(it)
                         }
                     }
-                    originalKategoriList.clear()
-                    originalKategoriList.addAll(list)
-                    kategoriList.value = list
-                    isSearchEmpty.value = false
-                    Log.d("DataKategoriViewModel", "Loaded ${list.size} kategori items.")
-                } else {
-                    originalKategoriList.clear()
-                    kategoriList.value = ArrayList()
-                    isSearchEmpty.value = true
-                    Log.d("DataKategoriViewModel", "No kategori data found.")
-                }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                isLoading.value = false
-            }
-        })
+                    originalKategoriList = list
+                    kategoriList.value = list
+                    isSearchEmpty.value = list.isEmpty()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    isLoading.value = false
+                }
+            })
+    }
+
+    // ✅ TOGGLE STATUS (INI INTI FITUR)
+    fun toggleStatus(kategori: ModelKategori) {
+        val id = kategori.idKategori ?: return
+
+        val newStatus =
+            if (kategori.statusKategori == "Aktif") "Non Aktif"
+            else "Aktif"
+
+        // update Firebase
+        myRef.child(id).child("statusKategori").setValue(newStatus)
+
+        // update local biar langsung berubah di UI
+        kategori.statusKategori = newStatus
+        kategoriList.value = originalKategoriList
     }
 
     fun filterList(query: String?) {
-        searchQuery.value = query
         if (query.isNullOrEmpty()) {
             kategoriList.value = originalKategoriList
-            isSearchEmpty.value = false
         } else {
-            val filteredList = originalKategoriList.filter {
-                it.namaKategori?.lowercase()?.contains(query.lowercase()) == true
+            val filtered = originalKategoriList.filter {
+                it.namaKategori?.contains(query, true) == true
             }
-            kategoriList.value = ArrayList(filteredList)
-            isSearchEmpty.value = filteredList.isEmpty()
+            kategoriList.value = ArrayList(filtered)
         }
     }
 }
