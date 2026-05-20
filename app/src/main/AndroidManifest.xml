@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPenjualan">
         <activity
+            android:name=".cabang.ModCabang"
+            android:exported="false" />
+        <activity
+            android:name=".cabang.DataCabang"
+            android:exported="false" />
+        <activity
             android:name=".produk.ModProduk"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".produk.DataProduk"
             android:exported="false" />

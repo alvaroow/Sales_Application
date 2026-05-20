@@ -158,10 +158,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <AutoCompleteTextView
-                android:id="@+id/spKategori"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/spKategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- CABANG -->
@@ -176,10 +180,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/spCabang"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- STOK -->

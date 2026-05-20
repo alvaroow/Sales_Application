@@ -6,14 +6,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.alvaro.projectpenjualan.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.alvaro.projectpenjualan.model.ModelProduk
 
 class ModProduk : AppCompatActivity() {
@@ -26,22 +26,25 @@ class ModProduk : AppCompatActivity() {
     private lateinit var btnSimpan: MaterialButton
     private lateinit var btnCamera: MaterialButton
     private lateinit var btnGallery: MaterialButton
-    private lateinit var spKategori: AutoCompleteTextView
-    private lateinit var spCabang: AutoCompleteTextView
+    private lateinit var spKategori: MaterialAutoCompleteTextView
+    private lateinit var spCabang: MaterialAutoCompleteTextView
 
     private var imageUri: Uri? = null
 
-    private val database = FirebaseDatabase.getInstance()
-
-    private val myRef = database.getReference("produk")
+    private val db = FirebaseDatabase.getInstance()
+    private val produkRef = db.getReference("produk")
+    private val kategoriRef = db.getReference("kategori")
+    private val cabangRef = db.getReference("cabang")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mod_produk)
 
         initView()
-        setupDropdown()
         setupListener()
+        setupDropdown()
+        loadKategori()
+        loadCabang()
     }
 
     private fun initView() {
@@ -57,18 +60,72 @@ class ModProduk : AppCompatActivity() {
         spCabang = findViewById(R.id.spCabang)
     }
 
+    // ================= DROPDOWN =================
+
     private fun setupDropdown() {
-        val kategoriList = arrayOf("Makanan", "Minuman", "Snack", "Lainnya")
-        val cabangList = arrayOf("Cabang A", "Cabang B", "Cabang C")
+        spKategori.setOnClickListener { spKategori.showDropDown() }
+        spCabang.setOnClickListener { spCabang.showDropDown() }
 
-        spKategori.setAdapter(
-            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, kategoriList)
-        )
+        spKategori.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) spKategori.showDropDown()
+        }
 
-        spCabang.setAdapter(
-            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, cabangList)
-        )
+        spCabang.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) spCabang.showDropDown()
+        }
     }
+
+    // ================= FIREBASE KATEGORI =================
+
+    private fun loadKategori() {
+        kategoriRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<String>()
+
+                for (data in snapshot.children) {
+                    val nama = data.child("namaKategori").getValue(String::class.java)
+                    if (nama != null) list.add(nama)
+                }
+
+                val adapter = ArrayAdapter(
+                    this@ModProduk,
+                    android.R.layout.simple_dropdown_item_1line,
+                    list
+                )
+
+                spKategori.setAdapter(adapter)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    // ================= FIREBASE CABANG =================
+
+    private fun loadCabang() {
+        cabangRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<String>()
+
+                for (data in snapshot.children) {
+                    val nama = data.child("namaCabang").getValue(String::class.java)
+                    if (nama != null) list.add(nama)
+                }
+
+                val adapter = ArrayAdapter(
+                    this@ModProduk,
+                    android.R.layout.simple_dropdown_item_1line,
+                    list
+                )
+
+                spCabang.setAdapter(adapter)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    // ================= LISTENER =================
 
     private fun setupListener() {
 
@@ -92,7 +149,8 @@ class ModProduk : AppCompatActivity() {
         }
     }
 
-    // CAMERA RESULT
+    // ================= CAMERA =================
+
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -101,7 +159,8 @@ class ModProduk : AppCompatActivity() {
             }
         }
 
-    // GALLERY RESULT
+    // ================= GALLERY =================
+
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -110,49 +169,43 @@ class ModProduk : AppCompatActivity() {
             }
         }
 
+    // ================= SAVE =================
+
     private fun saveProduk() {
 
         val nama = etNama.text.toString()
-        val hargaText = etHarga.text.toString()
-        val stokText = if (cbUnlimited.isChecked) "0" else etStok.text.toString()
+        val harga = etHarga.text.toString()
+        val stok = if (cbUnlimited.isChecked) "0" else etStok.text.toString()
 
         val kategori = spKategori.text.toString()
         val cabang = spCabang.text.toString()
 
-        if (nama.isEmpty() || hargaText.isEmpty() || kategori.isEmpty() || cabang.isEmpty()) {
+        if (nama.isEmpty() || harga.isEmpty() || kategori.isEmpty() || cabang.isEmpty()) {
             Toast.makeText(this, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val harga = hargaText.toIntOrNull() ?: 0
-        val stok = stokText.toIntOrNull() ?: 0
-
-        val idProduk = myRef.push().key ?: return
-
-        val image = imageUri?.toString() ?: ""
+        val id = produkRef.push().key ?: return
 
         val produk = ModelProduk(
-            idProduk = idProduk,
+            idProduk = id,
             namaProduk = nama,
-            hargaProduk = harga,
+            hargaProduk = harga.toInt(),
             idKategori = kategori,
             idCabang = cabang,
-            fotoProduk = image,
-            stokProduk = stok,
+            fotoProduk = imageUri?.toString() ?: "",
+            stokProduk = stok.toInt(),
             statusProduk = "Aktif",
             createdAt = System.currentTimeMillis().toString(),
             updateAt = System.currentTimeMillis().toString()
         )
 
-        myRef.child(idProduk).setValue(produk)
+        produkRef.child(id).setValue(produk)
             .addOnSuccessListener {
-
                 Toast.makeText(this, "Produk berhasil disimpan", Toast.LENGTH_SHORT).show()
                 finish()
-
             }
             .addOnFailureListener {
-
                 Toast.makeText(this, "Gagal simpan produk", Toast.LENGTH_SHORT).show()
             }
     }
