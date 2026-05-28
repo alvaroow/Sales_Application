@@ -43,18 +43,50 @@ class DataCabang : AppCompatActivity() {
     private fun observeData() {
         vm.cabangList.observe(this) { list ->
 
-            // 1. Buat variabel adapternya dulu
             val adapterCabang = AdapterCabang(list)
 
-            // 2. Sambungkan kabel klik status ke ViewModel
+            // 1. Fungsi Hapus (Tekan Tahan)
+            adapterCabang.setOnItemLongClickListener(object : AdapterCabang.OnItemLongClickListener {
+                override fun onItemLongClick(cabang: com.alvaro.projectpenjualan.model.ModelCabang) {
+                    // Memunculkan Pop-up konfirmasi
+                    android.app.AlertDialog.Builder(this@DataCabang)
+                        .setTitle("Hapus Cabang")
+                        .setMessage("Yakin ingin menghapus ${cabang.namaCabang} secara permanen?")
+                        .setPositiveButton("Hapus") { _, _ ->
+                            // Perintah Hapus ke Firebase
+                            com.google.firebase.database.FirebaseDatabase.getInstance()
+                                .getReference("cabang")
+                                .child(cabang.idCabang ?: "")
+                                .removeValue()
+                                .addOnSuccessListener {
+                                    android.widget.Toast.makeText(this@DataCabang, "Cabang dihapus", android.widget.Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                        .setNegativeButton("Batal", null)
+                        .show()
+                }
+            })
+
+            // 2. Fungsi Edit (Klik Biasa)
+            adapterCabang.setOnItemClickListener(object : AdapterCabang.OnItemClickListener {
+                override fun onItemClick(cabang: com.alvaro.projectpenjualan.model.ModelCabang) {
+                    val intent = android.content.Intent(this@DataCabang, ModCabang::class.java)
+                    // Bawa data lama ke halaman Form
+                    intent.putExtra("ID", cabang.idCabang)
+                    intent.putExtra("NAMA", cabang.namaCabang)
+                    intent.putExtra("ALAMAT", cabang.alamatCabang)
+                    intent.putExtra("STATUS", cabang.statusCabang)
+                    startActivity(intent)
+                }
+            })
+
+            // 3. Fungsi Ubah Status
             adapterCabang.setOnStatusClickListener(object : AdapterCabang.OnStatusClickListener {
                 override fun onStatusClick(cabang: com.alvaro.projectpenjualan.model.ModelCabang) {
-                    // Perintah ini yang bikin data di Firebase dan layar berubah
                     vm.toggleStatus(cabang)
                 }
             })
 
-            // 3. Masukkan adapter yang sudah nyala kabelnya ke RecyclerView
             rvCabang.adapter = adapterCabang
         }
     }

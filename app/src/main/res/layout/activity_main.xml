@@ -308,7 +308,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Layanan -->
+            <!-- Akun -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv2"
                 android:layout_width="0dp"

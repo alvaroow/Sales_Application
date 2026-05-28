@@ -25,11 +25,13 @@ class ModKategori : AppCompatActivity() {
     private lateinit var spStatusKategori : AutoCompleteTextView
     private lateinit var btSimpan : MaterialButton
 
+    // ✅ Variabel penampung Mode Edit
+    private var idKategoriEdit: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_mod_kategori)
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -46,7 +48,17 @@ class ModKategori : AppCompatActivity() {
         val statusList = resources.getStringArray(R.array.Status)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line,statusList)
         spStatusKategori.setAdapter(adapter)
-        if (statusList.isNotEmpty()) spStatusKategori.setText(statusList[0],false)
+
+        // ✅ Cek apakah ini mode Edit
+        idKategoriEdit = intent.getStringExtra("ID")
+        if (idKategoriEdit != null) {
+            etNamaKategori.setText(intent.getStringExtra("NAMA"))
+            val status = intent.getStringExtra("STATUS") ?: "Aktif"
+            spStatusKategori.setText(status, false)
+            btSimpan.text = "Update Kategori"
+        } else {
+            if (statusList.isNotEmpty()) spStatusKategori.setText(statusList[0],false)
+        }
 
         btSimpan.setOnClickListener {
             val nama = etNamaKategori.text.toString().trim()
@@ -56,25 +68,27 @@ class ModKategori : AppCompatActivity() {
                 etNamaKategori.error = "Nama kategori wajib diisi"
                 return@setOnClickListener
             }
-            val key = myRef.push().key
+
+            // ✅ Gunakan ID lama jika Edit, buat ID baru jika Simpan
+            val key = idKategoriEdit ?: myRef.push().key
+
             if (key != null) {
                 val kategoriData = mapOf(
                     "idKategori" to key,
                     "namaKategori" to nama,
                     "statusKategori" to status
-
                 )
 
                 myRef.child(key).setValue(kategoriData)
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Kategori berhasil disimpan", Toast.LENGTH_SHORT).show()
+                        val pesan = if (idKategoriEdit != null) "Kategori diupdate" else "Kategori disimpan"
+                        Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
                         finish()
                     }
                     .addOnFailureListener {
-                        Toast.makeText(this, "Gagal menyimpan katrgori: ${it.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Gagal menyimpan kategori: ${it.message}", Toast.LENGTH_SHORT).show()
                     }
             }
         }
     }
-
 }

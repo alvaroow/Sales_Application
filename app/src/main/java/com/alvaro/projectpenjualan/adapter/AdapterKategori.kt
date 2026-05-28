@@ -1,6 +1,5 @@
 package com.alvaro.projectpenjualan.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,9 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
     private var listener: OnItemClickListener? = null
     private var statusListener: OnStatusClickListener? = null
 
+    // ✅ Tambahan: Kabel untuk menangkap Tekan Tahan (Hapus)
+    private var longListener: OnItemLongClickListener? = null
+
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
@@ -24,12 +26,22 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
         this.statusListener = listener
     }
 
+    // ✅ Tambahan: Setter untuk Tekan Tahan
+    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
+        this.longListener = listener
+    }
+
     interface OnItemClickListener {
         fun onItemClick(kategori: ModelKategori)
     }
 
     interface OnStatusClickListener {
         fun onStatusClick(kategori: ModelKategori)
+    }
+
+    // ✅ Tambahan: Interface untuk Tekan Tahan
+    interface OnItemLongClickListener {
+        fun onItemLongClick(kategori: ModelKategori)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KategoriViewHolder {
@@ -66,12 +78,18 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
                 chipStatus.setChipBackgroundColorResource(R.color.green)
             }
 
-            // klik card
+            // klik card (Untuk Edit)
             itemView.setOnClickListener {
                 listener?.onItemClick(kategori)
             }
 
+            // ✅ Tambahan: Tekan tahan card (Untuk Hapus)
+            itemView.setOnLongClickListener {
+                longListener?.onItemLongClick(kategori)
+                true // Wajib return true agar klik biasa tidak ikut terpanggil
+            }
 
+            // klik status (Untuk Ubah Aktif/Non Aktif)
             chipStatus.setOnClickListener {
                 statusListener?.onStatusClick(kategori)
             }

@@ -1,5 +1,7 @@
 package com.alvaro.projectpenjualan.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,26 +16,18 @@ class AdapterCabang(private val list: List<ModelCabang>) :
 
     private var listener: OnItemClickListener? = null
     private var statusListener: OnStatusClickListener? = null
+    private var longListener: OnItemLongClickListener? = null
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
+    fun setOnItemClickListener(listener: OnItemClickListener) { this.listener = listener }
+    fun setOnStatusClickListener(listener: OnStatusClickListener) { this.statusListener = listener }
+    fun setOnItemLongClickListener(listener: OnItemLongClickListener) { this.longListener = listener }
 
-    fun setOnStatusClickListener(listener: OnStatusClickListener) {
-        this.statusListener = listener
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(cabang: ModelCabang)
-    }
-
-    interface OnStatusClickListener {
-        fun onStatusClick(cabang: ModelCabang)
-    }
+    interface OnItemClickListener { fun onItemClick(cabang: ModelCabang) }
+    interface OnStatusClickListener { fun onStatusClick(cabang: ModelCabang) }
+    interface OnItemLongClickListener { fun onItemLongClick(cabang: ModelCabang) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_data_cabang, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_data_cabang, parent, false)
         return ViewHolder(view)
     }
 
@@ -44,7 +38,6 @@ class AdapterCabang(private val list: List<ModelCabang>) :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val tvNama = itemView.findViewById<TextView>(R.id.tvNamaCabang)
         private val tvAlamat = itemView.findViewById<TextView>(R.id.tvAlamatCabang)
         private val chipStatus = itemView.findViewById<Chip>(R.id.tvStatusCabang)
@@ -56,22 +49,25 @@ class AdapterCabang(private val list: List<ModelCabang>) :
             val status = item.statusCabang ?: "Aktif"
             chipStatus.text = status
 
-            // Warna status disamakan persis dengan Kategori
             if (status == "Non Aktif") {
-                chipStatus.setChipBackgroundColorResource(R.color.red)
+                chipStatus.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#FEE2E2"))
+                chipStatus.setTextColor(Color.parseColor("#DC2626"))
             } else {
-                chipStatus.setChipBackgroundColorResource(R.color.green)
+                chipStatus.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#DCFCE7"))
+                chipStatus.setTextColor(Color.parseColor("#16A34A"))
             }
 
-            // Klik Card
-            itemView.setOnClickListener {
-                listener?.onItemClick(item)
+            // Klik Biasa (Untuk Edit)
+            itemView.setOnClickListener { listener?.onItemClick(item) }
+
+            // Tekan Tahan (Untuk Hapus)
+            itemView.setOnLongClickListener {
+                longListener?.onItemLongClick(item)
+                true
             }
 
             // Klik Status
-            chipStatus.setOnClickListener {
-                statusListener?.onStatusClick(item)
-            }
+            chipStatus.setOnClickListener { statusListener?.onStatusClick(item) }
         }
     }
 }

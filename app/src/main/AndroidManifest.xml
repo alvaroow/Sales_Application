@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPenjualan">
         <activity
+            android:name=".akun.DataAkun"
+            android:exported="false" />
+        <activity
             android:name=".laporan.DataLaporan"
             android:exported="false" />
         <activity
@@ -19,12 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".transaksi.CheckoutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".transaksi.BottomSheetCart"
-            android:exported="false" />
-        <activity
-            android:name=".transaksi.KeranjangActivity"
             android:exported="false" />
         <activity
             android:name=".transaksi.DataTransaksi"

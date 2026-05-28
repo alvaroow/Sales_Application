@@ -36,6 +36,11 @@ class ModProduk : AppCompatActivity() {
     private val kategoriRef = db.getReference("kategori")
     private val cabangRef = db.getReference("cabang")
 
+    // ✅ Variabel penampung Mode Edit
+    private var idProdukEdit: String? = null
+    private var statusProdukEdit: String = "Aktif"
+    private var fotoProdukLama: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mod_produk)
@@ -45,6 +50,36 @@ class ModProduk : AppCompatActivity() {
         setupDropdown()
         loadKategori()
         loadCabang()
+
+        // ✅ Cek apakah ini mode Edit
+        idProdukEdit = intent.getStringExtra("ID")
+        if (idProdukEdit != null) {
+            etNama.setText(intent.getStringExtra("NAMA"))
+            etHarga.setText(intent.getStringExtra("HARGA"))
+
+            val stok = intent.getStringExtra("STOK") ?: "0"
+            if (stok == "0") {
+                cbUnlimited.isChecked = true
+                etStok.isEnabled = false
+                etStok.setText("0")
+            } else {
+                cbUnlimited.isChecked = false
+                etStok.isEnabled = true
+                etStok.setText(stok)
+            }
+
+            spKategori.setText(intent.getStringExtra("KATEGORI"), false)
+            spCabang.setText(intent.getStringExtra("CABANG"), false)
+            statusProdukEdit = intent.getStringExtra("STATUS") ?: "Aktif"
+            fotoProdukLama = intent.getStringExtra("FOTO") ?: ""
+
+            if (fotoProdukLama.isNotEmpty()) {
+                imageUri = Uri.parse(fotoProdukLama)
+                ivPreview.setImageURI(imageUri)
+            }
+
+            btnSimpan.text = "Update Produk"
+        }
     }
 
     private fun initView() {
@@ -60,135 +95,71 @@ class ModProduk : AppCompatActivity() {
         spCabang = findViewById(R.id.spCabang)
     }
 
-    // ================= DROPDOWN =================
-
     private fun setupDropdown() {
         spKategori.setOnClickListener { spKategori.showDropDown() }
         spCabang.setOnClickListener { spCabang.showDropDown() }
-
-        spKategori.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) spKategori.showDropDown()
-        }
-
-        spCabang.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) spCabang.showDropDown()
-        }
+        spKategori.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spKategori.showDropDown() }
+        spCabang.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spCabang.showDropDown() }
     }
-
-// ================= FIREBASE KATEGORI =================
 
     private fun loadKategori() {
         kategoriRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = ArrayList<String>()
-
                 for (data in snapshot.children) {
                     val nama = data.child("namaKategori").getValue(String::class.java)
-                    // Ambil statusnya, kalau kosong anggap saja Aktif
                     val status = data.child("statusKategori").getValue(String::class.java) ?: "Aktif"
-
-                    // Filter: Hanya tambahkan ke dropdown jika statusnya Aktif
-                    if (nama != null && status == "Aktif") {
-                        list.add(nama)
-                    }
+                    if (nama != null && status == "Aktif") list.add(nama)
                 }
-
-                val adapter = ArrayAdapter(
-                    this@ModProduk,
-                    android.R.layout.simple_dropdown_item_1line,
-                    list
-                )
-
-                spKategori.setAdapter(adapter)
+                spKategori.setAdapter(ArrayAdapter(this@ModProduk, android.R.layout.simple_dropdown_item_1line, list))
             }
-
             override fun onCancelled(error: DatabaseError) {}
         })
     }
-
-    // ================= FIREBASE CABANG =================
 
     private fun loadCabang() {
         cabangRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = ArrayList<String>()
-
                 for (data in snapshot.children) {
                     val nama = data.child("namaCabang").getValue(String::class.java)
-                    // Ambil statusnya, kalau kosong anggap saja Aktif
                     val status = data.child("statusCabang").getValue(String::class.java) ?: "Aktif"
-
-                    // Filter: Hanya tambahkan ke dropdown jika statusnya Aktif
-                    if (nama != null && status == "Aktif") {
-                        list.add(nama)
-                    }
+                    if (nama != null && status == "Aktif") list.add(nama)
                 }
-
-                val adapter = ArrayAdapter(
-                    this@ModProduk,
-                    android.R.layout.simple_dropdown_item_1line,
-                    list
-                )
-
-                spCabang.setAdapter(adapter)
+                spCabang.setAdapter(ArrayAdapter(this@ModProduk, android.R.layout.simple_dropdown_item_1line, list))
             }
-
             override fun onCancelled(error: DatabaseError) {}
         })
     }
 
-    // ================= LISTENER =================
-
     private fun setupListener() {
-
         cbUnlimited.setOnCheckedChangeListener { _, isChecked ->
             etStok.isEnabled = !isChecked
             if (isChecked) etStok.setText("0")
         }
+        btnCamera.setOnClickListener { cameraLauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE)) }
+        btnGallery.setOnClickListener { galleryLauncher.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)) }
+        btnSimpan.setOnClickListener { saveProduk() }
+    }
 
-        btnCamera.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraLauncher.launch(intent)
-        }
-
-        btnGallery.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            galleryLauncher.launch(intent)
-        }
-
-        btnSimpan.setOnClickListener {
-            saveProduk()
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val bitmap = result.data?.extras?.get("data") as Bitmap
+            ivPreview.setImageBitmap(bitmap)
         }
     }
 
-    // ================= CAMERA =================
-
-    private val cameraLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val bitmap = result.data?.extras?.get("data") as Bitmap
-                ivPreview.setImageBitmap(bitmap)
-            }
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            imageUri = result.data?.data
+            ivPreview.setImageURI(imageUri)
         }
-
-    // ================= GALLERY =================
-
-    private val galleryLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                imageUri = result.data?.data
-                ivPreview.setImageURI(imageUri)
-            }
-        }
-
-    // ================= SAVE =================
+    }
 
     private fun saveProduk() {
-
         val nama = etNama.text.toString()
         val harga = etHarga.text.toString()
         val stok = if (cbUnlimited.isChecked) "0" else etStok.text.toString()
-
         val kategori = spKategori.text.toString()
         val cabang = spCabang.text.toString()
 
@@ -197,7 +168,8 @@ class ModProduk : AppCompatActivity() {
             return
         }
 
-        val id = produkRef.push().key ?: return
+        // ✅ Gunakan ID lama jika Edit, buat ID baru jika Simpan
+        val id = idProdukEdit ?: produkRef.push().key ?: return
 
         val produk = ModelProduk(
             idProduk = id,
@@ -205,16 +177,17 @@ class ModProduk : AppCompatActivity() {
             hargaProduk = harga.toInt(),
             idKategori = kategori,
             idCabang = cabang,
-            fotoProduk = imageUri?.toString() ?: "",
+            fotoProduk = imageUri?.toString() ?: fotoProdukLama,
             stokProduk = stok.toInt(),
-            statusProduk = "Aktif",
+            statusProduk = statusProdukEdit,
             createdAt = System.currentTimeMillis().toString(),
             updateAt = System.currentTimeMillis().toString()
         )
 
         produkRef.child(id).setValue(produk)
             .addOnSuccessListener {
-                Toast.makeText(this, "Produk berhasil disimpan", Toast.LENGTH_SHORT).show()
+                val pesan = if (idProdukEdit != null) "Produk diupdate" else "Produk disimpan"
+                Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {

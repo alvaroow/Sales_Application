@@ -22,16 +22,20 @@ class AdapterProduk(
         fun onStatusClick(produk: ModelProduk)
     }
 
+    // ✅ Tambahan Interface buat Hapus
+    interface OnItemLongClickListener {
+        fun onItemLongClick(produk: ModelProduk)
+    }
+
     private var listener: OnItemClickListener? = null
     private var statusListener: OnStatusClickListener? = null
+    // ✅ Tambahan Listener buat Hapus
+    private var longListener: OnItemLongClickListener? = null
 
-    fun setOnItemClickListener(l: OnItemClickListener) {
-        listener = l
-    }
-
-    fun setOnStatusClickListener(l: OnStatusClickListener) {
-        statusListener = l
-    }
+    fun setOnItemClickListener(l: OnItemClickListener) { listener = l }
+    fun setOnStatusClickListener(l: OnStatusClickListener) { statusListener = l }
+    // ✅ Tambahan Setter buat Hapus
+    fun setOnItemLongClickListener(l: OnItemLongClickListener) { longListener = l }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -75,10 +79,18 @@ class AdapterProduk(
                 chipStatus.setChipBackgroundColorResource(R.color.green)
             }
 
+            // Klik biasa (Untuk Edit)
             itemView.setOnClickListener {
                 listener?.onItemClick(p)
             }
 
+            // ✅ Tekan tahan (Untuk Hapus)
+            itemView.setOnLongClickListener {
+                longListener?.onItemLongClick(p)
+                true
+            }
+
+            // Klik status
             chipStatus.setOnClickListener {
                 statusListener?.onStatusClick(p)
             }
