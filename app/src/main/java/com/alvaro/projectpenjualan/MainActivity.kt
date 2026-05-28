@@ -2,46 +2,40 @@ package com.alvaro.projectpenjualan
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.alvaro.projectpenjualan.kategori.DataKategori
 import com.alvaro.projectpenjualan.produk.DataProduk
 import com.alvaro.projectpenjualan.cabang.DataCabang
+import com.alvaro.projectpenjualan.transaksi.DataTransaksi
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var CardKategori : CardView
-    lateinit var CardProduk : CardView
-
-    lateinit var CardCabang : CardView
+    lateinit var CardKategori: CardView
+    lateinit var CardProduk: CardView
+    lateinit var CardCabang: CardView
+    lateinit var CardTransaksi: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         init()
 
         CardKategori.setOnClickListener {
-            val intent = Intent(this@MainActivity, DataKategori::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, DataKategori::class.java))
         }
+
         CardProduk.setOnClickListener {
-            val intent = Intent(this@MainActivity, DataProduk::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, DataProduk::class.java))
         }
+
         CardCabang.setOnClickListener {
-            val intent = Intent(this@MainActivity, DataCabang::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, DataCabang::class.java))
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-
+        CardTransaksi.setOnClickListener {
+            startActivity(Intent(this, DataTransaksi::class.java))
         }
     }
 
@@ -49,5 +43,6 @@ class MainActivity : AppCompatActivity() {
         CardKategori = findViewById(R.id.cv4)
         CardProduk = findViewById(R.id.cv3)
         CardCabang = findViewById(R.id.cv6)
+        CardTransaksi = findViewById(R.id.cvTransaksi)
     }
 }
