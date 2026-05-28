@@ -1,10 +1,11 @@
 package com.alvaro.projectpenjualan.model
 
 data class ModelTransaksi(
-    var idTransaksi: String = "",
-    var total: Int = 0,
-    var bayar: Int = 0,
-    var kembalian: Int = 0,
-    var tanggal: Long = 0,
-    var items: List<ModelCart> = emptyList()
+    val idTransaksi: String = "",
+    val total: Int = 0,
+    val bayar: Int = 0,
+    val kembalian: Int = 0,
+    val tanggal: Long = 0L,
+    val items: List<ModelCart> = emptyList(),
+    val namaKasir: String = ""
 )

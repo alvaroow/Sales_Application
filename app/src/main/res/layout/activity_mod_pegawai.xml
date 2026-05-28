@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        tools:context=".cabang.ModCabang">
+        tools:context=".pegawai.ModPegawai">
 
-        <!-- HEADER -->
         <androidx.cardview.widget.CardView
             android:id="@+id/headerCard"
             android:layout_width="0dp"
@@ -35,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tambah Cabang"
+                    android:text="Tambah Pegawai"
                     android:textColor="#FFFFFF"
                     android:textSize="22sp"
                     android:textStyle="bold"/>
@@ -43,7 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tambahkan cabang baru bisnis kamu"
+                    android:text="Tambahkan pegawai baru bisnis kamu"
                     android:textColor="#94A3B8"
                     android:textSize="13sp"
                     android:layout_marginTop="6dp"/>
@@ -52,13 +51,12 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- NAMA -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilNamaCabang"
+            android:id="@+id/tilNamaPegawai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Nama Cabang"
+            android:hint="Nama Pegawai"
             app:boxCornerRadiusTopStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
@@ -68,38 +66,15 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etNamaCabang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- ALAMAT -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilAlamatCabang"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:hint="Alamat Cabang"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilNamaCabang"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAlamatCabang"
+                android:id="@+id/etNamaPegawai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="3"/>
+                android:inputType="textPersonName"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- TELEPON -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTelpCabang"
+            android:id="@+id/tilTelpPegawai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -108,21 +83,21 @@
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusBottomEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilAlamatCabang"
+            app:layout_constraintTop_toBottomOf="@id/tilNamaPegawai"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTelpCabang"
+                android:id="@+id/etNoTelp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- STATUS CABANG -->
+        <!-- STATUS PEGAWAI -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilStatusCabang"
+            android:id="@+id/tilStatusPegawai"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -132,12 +107,12 @@
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusBottomEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilTelpCabang"
+            app:layout_constraintTop_toBottomOf="@id/tilTelpPegawai"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/spStatusCabang"
+                android:id="@+id/spStatusPegawai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -146,18 +121,17 @@
                 android:cursorVisible="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- BUTTON -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSimpanCabang"
+            android:id="@+id/btnSimpanPegawai"
             android:layout_width="0dp"
             android:layout_height="54dp"
             android:layout_marginTop="24dp"
-            android:text="Simpan Cabang"
+            android:text="Simpan Pegawai"
             android:textStyle="bold"
             android:textSize="14sp"
             app:backgroundTint="#0F172A"
             app:cornerRadius="18dp"
-            app:layout_constraintTop_toBottomOf="@id/tilStatusCabang"
+            app:layout_constraintTop_toBottomOf="@id/tilStatusPegawai"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -159,13 +159,13 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/spKategori"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="true"
-            android:cursorVisible="false"/>
+                android:id="@+id/spKategori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- CABANG -->
@@ -219,6 +219,28 @@
             app:layout_constraintTop_toBottomOf="@id/tilStok"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <!-- STATUS -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilStatusProduk"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Status"
+            app:layout_constraintTop_toBottomOf="@id/cbUnlimited"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/spStatusProduk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- BUTTON SIMPAN -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSimpan"
@@ -229,7 +251,7 @@
             android:layout_marginTop="18dp"
             app:cornerRadius="16dp"
             app:backgroundTint="#1E293B"
-            app:layout_constraintTop_toBottomOf="@id/cbUnlimited"
+            app:layout_constraintTop_toBottomOf="@id/tilStatusProduk"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPenjualan">
         <activity
+            android:name=".pegawai.ModPegawai"
+            android:exported="false"
+            android:theme="@style/Theme.ProjectPenjualan" />
+        <activity
+            android:name=".pegawai.DataPegawai"
+            android:exported="false" />
+        <activity
             android:name=".akun.DataAkun"
             android:exported="false" />
         <activity

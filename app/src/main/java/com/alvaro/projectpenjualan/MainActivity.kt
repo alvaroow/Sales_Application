@@ -9,6 +9,7 @@ import com.alvaro.projectpenjualan.kategori.DataKategori
 import com.alvaro.projectpenjualan.produk.DataProduk
 import com.alvaro.projectpenjualan.cabang.DataCabang
 import com.alvaro.projectpenjualan.laporan.DataLaporan
+import com.alvaro.projectpenjualan.pegawai.DataPegawai
 import com.alvaro.projectpenjualan.transaksi.DataTransaksi
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var CardTransaksi: CardView
     lateinit var CardLaporan: CardView
     lateinit var CardAkun: CardView
+    lateinit var CardPegawai: CardView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         CardLaporan.setOnClickListener {
             startActivity(Intent(this, DataLaporan::class.java))
         }
+
+        CardPegawai.setOnClickListener {
+            startActivity(Intent(this, DataPegawai::class.java))
+        }
     }
 
     fun init() {
@@ -59,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         CardTransaksi = findViewById(R.id.cvTransaksi)
         CardLaporan = findViewById(R.id.cvLaporan)
         CardAkun = findViewById(R.id.cv2)
+        CardPegawai = findViewById(R.id.cv5)
 
     }
 }

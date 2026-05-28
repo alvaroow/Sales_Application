@@ -1,6 +1,8 @@
 package com.alvaro.projectpenjualan.cabang
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alvaro.projectpenjualan.R
@@ -14,13 +16,12 @@ class ModCabang : AppCompatActivity() {
     lateinit var etNama: TextInputEditText
     lateinit var etAlamat: TextInputEditText
     lateinit var etTelp: TextInputEditText
+    lateinit var spStatus: AutoCompleteTextView // ✅ Tambahan Dropdown Status
     lateinit var btnSimpan: MaterialButton
 
     private val db = FirebaseDatabase.getInstance().getReference("cabang")
 
-    // ✅ Variabel penampung untuk mendeteksi apakah ini sedang Mode Edit
     private var idCabangEdit: String? = null
-    private var statusCabangEdit: String = "Aktif"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +29,26 @@ class ModCabang : AppCompatActivity() {
 
         init()
 
-        // ✅ Cek apakah ada data yang dibawa dari halaman list (Tanda bahwa ini Mode Edit)
+        // ✅ Setup Dropdown Status
+        val statusList = arrayOf("Aktif", "Non Aktif")
+        val adapterStatus = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, statusList)
+        spStatus.setAdapter(adapterStatus)
+
         idCabangEdit = intent.getStringExtra("ID")
 
         if (idCabangEdit != null) {
-            // Isi otomatis form-nya dengan data lama
             etNama.setText(intent.getStringExtra("NAMA"))
             etAlamat.setText(intent.getStringExtra("ALAMAT"))
             etTelp.setText(intent.getStringExtra("TELP"))
-            statusCabangEdit = intent.getStringExtra("STATUS") ?: "Aktif"
 
-            // Ubah tulisan tombol
+            // Set status lama di form
+            val statusLama = intent.getStringExtra("STATUS") ?: "Aktif"
+            spStatus.setText(statusLama, false)
+
             btnSimpan.text = "Update Cabang"
+        } else {
+            // Set default saat tambah baru
+            spStatus.setText("Aktif", false)
         }
 
         btnSimpan.setOnClickListener {
@@ -48,17 +57,16 @@ class ModCabang : AppCompatActivity() {
     }
 
     private fun simpanCabang() {
-
         val nama = etNama.text.toString()
         val alamat = etAlamat.text.toString()
         val telp = etTelp.text.toString()
+        val status = spStatus.text.toString() // ✅ Ambil status dari dropdown
 
         if (nama.isEmpty() || alamat.isEmpty()) {
             Toast.makeText(this, "Lengkapi data", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // ✅ Jika idCabangEdit ada isinya, pakai ID lama (Update). Jika kosong, buat ID baru (Simpan).
         val id = idCabangEdit ?: db.push().key!!
 
         val cabang = ModelCabang(
@@ -66,16 +74,13 @@ class ModCabang : AppCompatActivity() {
             namaCabang = nama,
             alamatCabang = alamat,
             telpCabang = telp,
-            statusCabang = statusCabangEdit
+            statusCabang = status // ✅ Simpan status yang dipilih
         )
 
         db.child(id).setValue(cabang)
             .addOnSuccessListener {
-
-                // Pesan sukses disesuaikan dengan modenya
                 val pesan = if (idCabangEdit != null) "Cabang berhasil diupdate" else "Cabang berhasil disimpan"
                 Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
-
                 finish()
             }
     }
@@ -84,6 +89,7 @@ class ModCabang : AppCompatActivity() {
         etNama = findViewById(R.id.etNamaCabang)
         etAlamat = findViewById(R.id.etAlamatCabang)
         etTelp = findViewById(R.id.etTelpCabang)
+        spStatus = findViewById(R.id.spStatusCabang) // ✅ Hubungkan ID
         btnSimpan = findViewById(R.id.btnSimpanCabang)
     }
 }

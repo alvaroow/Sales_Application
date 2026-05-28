@@ -28,6 +28,7 @@ class ModProduk : AppCompatActivity() {
     private lateinit var btnGallery: MaterialButton
     private lateinit var spKategori: MaterialAutoCompleteTextView
     private lateinit var spCabang: MaterialAutoCompleteTextView
+    private lateinit var spStatus: MaterialAutoCompleteTextView // ✅ Tambahan Dropdown Status
 
     private var imageUri: Uri? = null
 
@@ -36,9 +37,7 @@ class ModProduk : AppCompatActivity() {
     private val kategoriRef = db.getReference("kategori")
     private val cabangRef = db.getReference("cabang")
 
-    // ✅ Variabel penampung Mode Edit
     private var idProdukEdit: String? = null
-    private var statusProdukEdit: String = "Aktif"
     private var fotoProdukLama: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +50,6 @@ class ModProduk : AppCompatActivity() {
         loadKategori()
         loadCabang()
 
-        // ✅ Cek apakah ini mode Edit
         idProdukEdit = intent.getStringExtra("ID")
         if (idProdukEdit != null) {
             etNama.setText(intent.getStringExtra("NAMA"))
@@ -70,7 +68,11 @@ class ModProduk : AppCompatActivity() {
 
             spKategori.setText(intent.getStringExtra("KATEGORI"), false)
             spCabang.setText(intent.getStringExtra("CABANG"), false)
-            statusProdukEdit = intent.getStringExtra("STATUS") ?: "Aktif"
+
+            // ✅ Set status lama di form
+            val statusLama = intent.getStringExtra("STATUS") ?: "Aktif"
+            spStatus.setText(statusLama, false)
+
             fotoProdukLama = intent.getStringExtra("FOTO") ?: ""
 
             if (fotoProdukLama.isNotEmpty()) {
@@ -79,6 +81,9 @@ class ModProduk : AppCompatActivity() {
             }
 
             btnSimpan.text = "Update Produk"
+        } else {
+            // ✅ Set default saat tambah baru
+            spStatus.setText("Aktif", false)
         }
     }
 
@@ -93,13 +98,22 @@ class ModProduk : AppCompatActivity() {
         btnGallery = findViewById(R.id.btnGallery)
         spKategori = findViewById(R.id.spKategori)
         spCabang = findViewById(R.id.spCabang)
+        spStatus = findViewById(R.id.spStatusProduk) // ✅ Hubungkan ID Status
     }
 
     private fun setupDropdown() {
         spKategori.setOnClickListener { spKategori.showDropDown() }
         spCabang.setOnClickListener { spCabang.showDropDown() }
+        spStatus.setOnClickListener { spStatus.showDropDown() } // ✅ Setup klik status
+
         spKategori.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spKategori.showDropDown() }
         spCabang.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spCabang.showDropDown() }
+        spStatus.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spStatus.showDropDown() } // ✅ Setup fokus status
+
+        // ✅ Setup adapter status
+        val statusList = arrayOf("Aktif", "Non Aktif")
+        val adapterStatus = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, statusList)
+        spStatus.setAdapter(adapterStatus)
     }
 
     private fun loadKategori() {
@@ -162,13 +176,13 @@ class ModProduk : AppCompatActivity() {
         val stok = if (cbUnlimited.isChecked) "0" else etStok.text.toString()
         val kategori = spKategori.text.toString()
         val cabang = spCabang.text.toString()
+        val status = spStatus.text.toString() // ✅ Ambil status dari form dropdown
 
-        if (nama.isEmpty() || harga.isEmpty() || kategori.isEmpty() || cabang.isEmpty()) {
+        if (nama.isEmpty() || harga.isEmpty() || kategori.isEmpty() || cabang.isEmpty() || status.isEmpty()) {
             Toast.makeText(this, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // ✅ Gunakan ID lama jika Edit, buat ID baru jika Simpan
         val id = idProdukEdit ?: produkRef.push().key ?: return
 
         val produk = ModelProduk(
@@ -179,7 +193,7 @@ class ModProduk : AppCompatActivity() {
             idCabang = cabang,
             fotoProduk = imageUri?.toString() ?: fotoProdukLama,
             stokProduk = stok.toInt(),
-            statusProduk = statusProdukEdit,
+            statusProduk = status, // ✅ Simpan status baru
             createdAt = System.currentTimeMillis().toString(),
             updateAt = System.currentTimeMillis().toString()
         )

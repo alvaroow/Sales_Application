@@ -31,8 +31,9 @@ class CheckoutActivity : AppCompatActivity() {
         btnBayar = findViewById(R.id.btnBayar)
 
         total = CartManager.getTotal()
-
         tvTotal.text = "Rp $total"
+
+        val namaKasir = intent.getStringExtra("NAMA_KASIR") ?: "Kasir Default"
 
         btnBayar.setOnClickListener {
 
@@ -52,7 +53,8 @@ class CheckoutActivity : AppCompatActivity() {
                 bayar = bayar,
                 kembalian = kembalian,
                 tanggal = System.currentTimeMillis(),
-                items = CartManager.getAll().map { it.copy() } // snapshot
+                items = CartManager.getAll().map { it.copy() },
+                namaKasir = namaKasir // ✅ SIMPAN NAMA KASIR KE DATABASE
             )
 
             FirebaseDatabase.getInstance()
@@ -65,10 +67,10 @@ class CheckoutActivity : AppCompatActivity() {
 
                     val intent = Intent(this, StrukActivity::class.java)
                     intent.putExtra("idTransaksi", idTransaksi)
+                    intent.putExtra("NAMA_KASIR", namaKasir)
                     startActivity(intent)
 
-                    CartManager.clear() // pindahkan ke sini (SETELAH SUCCESS)
-
+                    CartManager.clear()
                     finish()
                 }
                 .addOnFailureListener {

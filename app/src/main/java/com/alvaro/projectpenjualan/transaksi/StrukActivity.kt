@@ -24,7 +24,6 @@ class StrukActivity : AppCompatActivity() {
     private lateinit var tvKembalian: TextView
     private lateinit var rvStruk: RecyclerView
 
-    // Variabel Tombol Baru
     private lateinit var btnSelesai: MaterialButton
     private lateinit var btnCetak: MaterialButton
 
@@ -44,13 +43,7 @@ class StrukActivity : AppCompatActivity() {
 
         rvStruk.layoutManager = LinearLayoutManager(this)
 
-        // AKSI TOMBOL SELESAI
-        btnSelesai.setOnClickListener {
-            // Menutup halaman struk dan kembali ke menu sebelumnya
-            finish()
-        }
-
-        // AKSI TOMBOL CETAK STRUK (Pop-up Dummy untuk demo)
+        btnSelesai.setOnClickListener { finish() }
         btnCetak.setOnClickListener {
             Toast.makeText(this, "Menghubungkan ke Printer Bluetooth...", Toast.LENGTH_SHORT).show()
         }
@@ -65,7 +58,14 @@ class StrukActivity : AppCompatActivity() {
                 val transaksi = snapshot.getValue(ModelTransaksi::class.java)
 
                 if (transaksi != null) {
-                    tvId.text = transaksi.idTransaksi
+                    // ✅ PRIORITASKAN NAMA KASIR DARI DATABASE
+                    var namaKasir = transaksi.namaKasir
+                    if (namaKasir.isEmpty()) {
+                        namaKasir = intent.getStringExtra("NAMA_KASIR") ?: "Kasir Default"
+                    }
+
+                    tvId.text = "${transaksi.idTransaksi}\nKasir: $namaKasir"
+
                     tvTotal.text = "Rp ${transaksi.total}"
                     tvBayar.text = "Rp ${transaksi.bayar}"
                     tvKembalian.text = "Rp ${transaksi.kembalian}"
