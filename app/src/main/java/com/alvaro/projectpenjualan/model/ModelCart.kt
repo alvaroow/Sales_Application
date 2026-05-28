@@ -1,6 +1,6 @@
 package com.alvaro.projectpenjualan.model
 
 data class ModelCart(
-    val produk: ModelProduk,
-    var qty: Int = 1
+    var produk: ModelProduk = ModelProduk(), // <-- Ini tambahannya
+    var qty: Int = 0
 )

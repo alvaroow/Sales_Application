@@ -1,5 +1,6 @@
 package com.alvaro.projectpenjualan.transaksi
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
@@ -7,7 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alvaro.projectpenjualan.CartManager
 import com.alvaro.projectpenjualan.R
+import com.alvaro.projectpenjualan.model.ModelTransaksi
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.database.FirebaseDatabase
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -41,12 +44,36 @@ class CheckoutActivity : AppCompatActivity() {
             }
 
             val kembalian = bayar - total
+            val idTransaksi = "TXN" + System.currentTimeMillis()
 
-            tvKembalian.text = "Rp $kembalian"
+            val transaksi = ModelTransaksi(
+                idTransaksi = idTransaksi,
+                total = total,
+                bayar = bayar,
+                kembalian = kembalian,
+                tanggal = System.currentTimeMillis(),
+                items = CartManager.getAll().map { it.copy() } // snapshot
+            )
 
-            Toast.makeText(this, "Pembayaran berhasil", Toast.LENGTH_LONG).show()
+            FirebaseDatabase.getInstance()
+                .getReference("transaksi")
+                .child(idTransaksi)
+                .setValue(transaksi)
+                .addOnSuccessListener {
 
-            CartManager.clear()
+                    Toast.makeText(this, "Checkout berhasil", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, StrukActivity::class.java)
+                    intent.putExtra("idTransaksi", idTransaksi)
+                    startActivity(intent)
+
+                    CartManager.clear() // pindahkan ke sini (SETELAH SUCCESS)
+
+                    finish()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Gagal simpan transaksi", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }
