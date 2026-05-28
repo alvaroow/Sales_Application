@@ -46,8 +46,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
+            android:clipToPadding="false"
+            android:paddingBottom="90dp"
             tools:listitem="@layout/item_data_produk"/>
 
     </androidx.cardview.widget.CardView>
+
+    <include
+        android:id="@+id/mini_bottom_sheet"
+        layout="@layout/mini_bottom_sheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

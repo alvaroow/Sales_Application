@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class ModelProduk(
-    val idProduk: String? = null,
-    val namaProduk: String? = null,
-    val hargaProduk: Int? = 0,
-    val idKategori: String? = null,
-    val idCabang: String? = null,
-    val fotoProduk: String? = null,
-    val stokProduk: Int? = 0,
+    var idProduk: String? = null,
+    var namaProduk: String? = null,
+    var hargaProduk: Int? = 0,
+    var idKategori: String? = null,
+    var idCabang: String? = null,
+    var fotoProduk: String? = null,
+    var stokProduk: Int? = 0,
 
     var statusProduk: String? = "Aktif",
 
