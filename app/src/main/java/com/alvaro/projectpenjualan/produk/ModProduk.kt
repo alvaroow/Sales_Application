@@ -75,7 +75,7 @@ class ModProduk : AppCompatActivity() {
         }
     }
 
-    // ================= FIREBASE KATEGORI =================
+// ================= FIREBASE KATEGORI =================
 
     private fun loadKategori() {
         kategoriRef.addValueEventListener(object : ValueEventListener {
@@ -84,7 +84,13 @@ class ModProduk : AppCompatActivity() {
 
                 for (data in snapshot.children) {
                     val nama = data.child("namaKategori").getValue(String::class.java)
-                    if (nama != null) list.add(nama)
+                    // Ambil statusnya, kalau kosong anggap saja Aktif
+                    val status = data.child("statusKategori").getValue(String::class.java) ?: "Aktif"
+
+                    // Filter: Hanya tambahkan ke dropdown jika statusnya Aktif
+                    if (nama != null && status == "Aktif") {
+                        list.add(nama)
+                    }
                 }
 
                 val adapter = ArrayAdapter(
@@ -109,7 +115,13 @@ class ModProduk : AppCompatActivity() {
 
                 for (data in snapshot.children) {
                     val nama = data.child("namaCabang").getValue(String::class.java)
-                    if (nama != null) list.add(nama)
+                    // Ambil statusnya, kalau kosong anggap saja Aktif
+                    val status = data.child("statusCabang").getValue(String::class.java) ?: "Aktif"
+
+                    // Filter: Hanya tambahkan ke dropdown jika statusnya Aktif
+                    if (nama != null && status == "Aktif") {
+                        list.add(nama)
+                    }
                 }
 
                 val adapter = ArrayAdapter(

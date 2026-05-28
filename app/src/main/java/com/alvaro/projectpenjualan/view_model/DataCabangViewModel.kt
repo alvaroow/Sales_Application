@@ -2,61 +2,78 @@ package com.alvaro.projectpenjualan.model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DataCabangViewModel : ViewModel() {
 
-    private val db =
-        FirebaseDatabase
-            .getInstance()
-            .getReference("cabang")
+    private val database = FirebaseDatabase.getInstance()
+    private val myRef = database.getReference("cabang")
 
-    val cabangList =
-        MutableLiveData<
-                ArrayList<ModelCabang>
-                >()
+    val cabangList = MutableLiveData<ArrayList<ModelCabang>>()
+    private var originalCabangList = ArrayList<ModelCabang>()
+
+    val isLoading = MutableLiveData<Boolean>()
+    val isSearchEmpty = MutableLiveData<Boolean>()
 
     init {
         getData()
     }
 
-    private fun getData() {
+    fun getData() {
+        isLoading.value = true
 
-        db.addValueEventListener(
+        myRef.orderByChild("idCabang").limitToLast(100)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    isLoading.value = false
 
-            object : ValueEventListener {
+                    val list = ArrayList<ModelCabang>()
 
-                override fun onDataChange(
-                    snapshot: DataSnapshot
-                ) {
-
-                    val list =
-                        ArrayList<ModelCabang>()
-
-                    for(data in snapshot.children){
-
-                        val cabang =
-                            data.getValue(
-                                ModelCabang::class.java
-                            )
-
-                        cabang?.let {
+                    for (dataSnapshot in snapshot.children) {
+                        dataSnapshot.getValue(ModelCabang::class.java)?.let {
                             list.add(it)
                         }
                     }
 
-                    cabangList.value =
-                        list
+                    originalCabangList = list
+                    cabangList.value = list
+                    isSearchEmpty.value = list.isEmpty()
                 }
 
-                override fun onCancelled(
-                    error: DatabaseError
-                ) {}
-
-            }
-
-        )
-
+                override fun onCancelled(error: DatabaseError) {
+                    isLoading.value = false
+                }
+            })
     }
 
+    // ✅ TOGGLE STATUS (Ditambahkan biar serasi dengan Kategori)
+    fun toggleStatus(cabang: ModelCabang) {
+        val id = cabang.idCabang ?: return
+
+        val newStatus =
+            if (cabang.statusCabang == "Aktif") "Non Aktif"
+            else "Aktif"
+
+        // update Firebase
+        myRef.child(id).child("statusCabang").setValue(newStatus)
+
+        // update local biar langsung berubah di UI
+        cabang.statusCabang = newStatus
+        cabangList.value = originalCabangList
+    }
+
+    // ✅ FILTER LIST (Ditambahkan buat fitur pencarian)
+    fun filterList(query: String?) {
+        if (query.isNullOrEmpty()) {
+            cabangList.value = originalCabangList
+        } else {
+            val filtered = originalCabangList.filter {
+                it.namaCabang?.contains(query, true) == true
+            }
+            cabangList.value = ArrayList(filtered)
+        }
+    }
 }

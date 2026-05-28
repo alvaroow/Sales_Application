@@ -1,65 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="8dp"
     app:cardCornerRadius="18dp"
-    app:cardElevation="4dp">
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="14dp">
 
-        <!-- ICON -->
-        <ImageView
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:src="@drawable/cabang"
-            android:background="#E2E8F0"
-            android:padding="10dp"/>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/iconCardCabang"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="14dp"
+            app:cardBackgroundColor="#F1F5F9"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <!-- CONTENT -->
-        <LinearLayout
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:src="@drawable/cabang"
+                app:tint="#1E293B"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvNamaCabang"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="14dp">
+            android:text="Cabang Utama"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#111827"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toEndOf="@id/iconCardCabang"
+            app:layout_constraintTop_toTopOf="@id/iconCardCabang"
+            app:layout_constraintEnd_toStartOf="@id/tvStatusCabang"/>
 
-            <TextView
-                android:id="@+id/tvNamaCabang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cabang Utama"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#111827"/>
-
-            <TextView
-                android:id="@+id/tvAlamatCabang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jl. Slamet Riyadi"
-                android:textColor="#6B7280"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"/>
-
-        </LinearLayout>
-
-        <!-- STATUS -->
         <TextView
+            android:id="@+id/tvAlamatCabang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Jl. Slamet Riyadi"
+            android:textSize="13sp"
+            android:textColor="#6B7280"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/iconCardCabang"
+            app:layout_constraintTop_toBottomOf="@id/tvNamaCabang"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.chip.Chip
             android:id="@+id/tvStatusCabang"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="Aktif"
-            android:textColor="#16A34A"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textSize="12sp"/>
+            app:chipCornerRadius="8dp"
+            app:chipBackgroundColor="#DCFCE7"
+            app:chipStrokeWidth="0dp"
+            app:chipIconVisible="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconCardCabang"
+            app:layout_constraintBottom_toBottomOf="@id/iconCardCabang"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

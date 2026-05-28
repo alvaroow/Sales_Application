@@ -1,218 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="#F4F6FB">
 
+    <!-- Kertas Struk yang bisa di-scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
+            android:padding="20dp">
+
+            <!-- Header Toko -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KING POS STORE"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jl. Letjen Sutoyo, Surakarta"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telp: 0812-3456-7890"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Garis Putus-putus -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- - - - - - - - - - - - - - - - - - - - - - - "
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:maxLines="1" />
+
+            <!-- Info Transaksi -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/tvTanggal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tanggal"
+                    android:fontFamily="monospace"
+                    android:textSize="12sp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID Transaksi"
+                    android:fontFamily="monospace"
+                    android:textSize="12sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- - - - - - - - - - - - - - - - - - - - - - - "
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:maxLines="1"/>
+
+            <!-- List Produk dari RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvStruk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_struk_produk"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- - - - - - - - - - - - - - - - - - - - - - - "
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:maxLines="1"/>
+
+            <!-- Rincian Total & Bayar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TOTAL"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 0"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TUNAI"
+                    android:fontFamily="monospace"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tvBayar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 0"
+                    android:fontFamily="monospace"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="KEMBALI"
+                    android:fontFamily="monospace"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tvKembalian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 0"
+                    android:fontFamily="monospace"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="======================================="
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Footer -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TERIMA KASIH"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Barang yang sudah dibeli\ntidak dapat ditukar/dikembalikan"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="#555555"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Area Tombol Aksi -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
         android:background="#FFFFFF"
-        android:elevation="4dp"
-        android:padding="20dp">
+        android:elevation="8dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="KING POS STORE"
-            android:fontFamily="monospace"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:textColor="#000000"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelesai"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Selesai"
+            app:strokeColor="#1E293B"
+            android:textColor="#1E293B"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Jl. Letjen Sutoyo, Surakarta"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="#555555"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Telp: 0812-3456-7890"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="#555555"
-            android:layout_marginBottom="12dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="- - - - - - - - - - - - - - - - - - - - - - - "
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:maxLines="1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
-
-            <TextView
-                android:id="@+id/tvTanggal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tanggal"
-                android:fontFamily="monospace"
-                android:textSize="12sp"
-                android:textColor="#000000"/>
-
-            <TextView
-                android:id="@+id/tvId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ID Transaksi"
-                android:fontFamily="monospace"
-                android:textSize="12sp"
-                android:textColor="#000000"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="- - - - - - - - - - - - - - - - - - - - - - - "
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:maxLines="1"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvStruk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_struk_produk"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="- - - - - - - - - - - - - - - - - - - - - - - "
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:maxLines="1"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TOTAL"
-                android:fontFamily="monospace"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 0"
-                android:fontFamily="monospace"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TUNAI"
-                android:fontFamily="monospace"
-                android:textColor="#000000"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tvBayar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 0"
-                android:fontFamily="monospace"
-                android:textColor="#000000"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="KEMBALI"
-                android:fontFamily="monospace"
-                android:textColor="#000000"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tvKembalian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 0"
-                android:fontFamily="monospace"
-                android:textColor="#000000"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="======================================="
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:maxLines="1"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TERIMA KASIH"
-            android:fontFamily="monospace"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Barang yang sudah dibeli\ntidak dapat ditukar/dikembalikan"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:textColor="#555555"
-            android:layout_marginTop="4dp"/>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCetak"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Cetak Struk"
+            app:backgroundTint="#1E293B"
+            android:textColor="#FFFFFF"/>
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

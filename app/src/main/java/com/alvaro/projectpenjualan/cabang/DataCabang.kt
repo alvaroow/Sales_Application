@@ -43,8 +43,19 @@ class DataCabang : AppCompatActivity() {
     private fun observeData() {
         vm.cabangList.observe(this) { list ->
 
-            rvCabang.adapter = AdapterCabang(list)
+            // 1. Buat variabel adapternya dulu
+            val adapterCabang = AdapterCabang(list)
 
+            // 2. Sambungkan kabel klik status ke ViewModel
+            adapterCabang.setOnStatusClickListener(object : AdapterCabang.OnStatusClickListener {
+                override fun onStatusClick(cabang: com.alvaro.projectpenjualan.model.ModelCabang) {
+                    // Perintah ini yang bikin data di Firebase dan layar berubah
+                    vm.toggleStatus(cabang)
+                }
+            })
+
+            // 3. Masukkan adapter yang sudah nyala kabelnya ke RecyclerView
+            rvCabang.adapter = adapterCabang
         }
     }
 

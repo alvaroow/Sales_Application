@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPenjualan">
         <activity
+            android:name=".laporan.DataLaporan"
+            android:exported="false" />
+        <activity
             android:name=".transaksi.StrukActivity"
             android:exported="false" />
         <activity

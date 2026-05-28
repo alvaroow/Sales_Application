@@ -1,5 +1,7 @@
 package com.alvaro.projectpenjualan.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelProduk
+import com.google.android.material.chip.Chip
 
 class AdapterTransaksi(
     private val list: List<ModelProduk>,
@@ -51,6 +54,10 @@ class AdapterTransaksi(
         private val tvStok =
             itemView.findViewById<TextView>(R.id.tvStokProduk)
 
+        // ✅ Tambahan: Inisialisasi Chip Status
+        private val chipStatus =
+            itemView.findViewById<Chip>(R.id.chipStatusProduk)
+
         fun bind(p: ModelProduk) {
 
             tvNama.text = p.namaProduk
@@ -62,6 +69,18 @@ class AdapterTransaksi(
             tvCabang.text = "Cabang: ${p.idCabang}"
 
             tvStok.text = "Stok: ${p.stokProduk}"
+
+            // ✅ Tambahan: Logika warna Chip (Hanya tampilan, tidak bisa di-toggle)
+            val status = p.statusProduk ?: "Aktif"
+            chipStatus.text = status
+
+            if (status == "Non Aktif") {
+                chipStatus.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#FEE2E2"))
+                chipStatus.setTextColor(Color.parseColor("#DC2626"))
+            } else {
+                chipStatus.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#DCFCE7"))
+                chipStatus.setTextColor(Color.parseColor("#16A34A"))
+            }
         }
     }
 }

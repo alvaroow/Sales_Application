@@ -65,7 +65,15 @@ class AdapterProduk(
             tvKategori.text = "Kategori: ${p.idKategori}"
             tvCabang.text = "Cabang: ${p.idCabang}"
 
-            chipStatus.text = p.statusProduk ?: "Aktif"
+            val status = p.statusProduk ?: "Aktif"
+            chipStatus.text = status
+
+            // Logika Warna Status
+            if (status == "Non Aktif") {
+                chipStatus.setChipBackgroundColorResource(R.color.red)
+            } else {
+                chipStatus.setChipBackgroundColorResource(R.color.green)
+            }
 
             itemView.setOnClickListener {
                 listener?.onItemClick(p)

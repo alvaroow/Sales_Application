@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView
 import com.alvaro.projectpenjualan.kategori.DataKategori
 import com.alvaro.projectpenjualan.produk.DataProduk
 import com.alvaro.projectpenjualan.cabang.DataCabang
+import com.alvaro.projectpenjualan.laporan.DataLaporan
 import com.alvaro.projectpenjualan.transaksi.DataTransaksi
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var CardProduk: CardView
     lateinit var CardCabang: CardView
     lateinit var CardTransaksi: CardView
+    lateinit var CardLaporan: CardView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         CardTransaksi.setOnClickListener {
             startActivity(Intent(this, DataTransaksi::class.java))
         }
+
+        CardLaporan.setOnClickListener {
+            startActivity(Intent(this, DataLaporan::class.java))
+        }
     }
 
     fun init() {
@@ -44,5 +51,7 @@ class MainActivity : AppCompatActivity() {
         CardProduk = findViewById(R.id.cv3)
         CardCabang = findViewById(R.id.cv6)
         CardTransaksi = findViewById(R.id.cvTransaksi)
+        CardLaporan = findViewById(R.id.cvLaporan)
+
     }
 }

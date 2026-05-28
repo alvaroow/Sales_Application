@@ -84,7 +84,6 @@ class DataTransaksi : AppCompatActivity() {
     }
 
     private fun loadData() {
-
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -92,7 +91,14 @@ class DataTransaksi : AppCompatActivity() {
 
                 for (data in snapshot.children) {
                     val produk = data.getValue(ModelProduk::class.java)
-                    produk?.let { list.add(it) }
+
+                    // ✅ FIX 2: Produk yang Non Aktif otomatis disembunyikan dari kasir
+                    produk?.let {
+                        val status = it.statusProduk ?: "Aktif"
+                        if (status == "Aktif") {
+                            list.add(it)
+                        }
+                    }
                 }
 
                 adapter.notifyDataSetChanged()
