@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- HEADER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#111827"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi pembayaran transaksi"
+            android:textColor="#6B7280"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- CARD TOTAL -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Pembayaran"
+                    android:textColor="#6B7280"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalBayar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 0"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:textColor="#16A34A"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- INPUT BAYAR -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uang Bayar"
+            android:textStyle="bold"
+            android:textColor="#111827"
+            android:layout_marginTop="22dp"/>
+
+        <EditText
+            android:id="@+id/etBayar"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/white"
+            android:paddingHorizontal="14dp"
+            android:hint="Masukkan uang bayar"
+            android:inputType="number"/>
+
+        <!-- KEMBALIAN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kembalian"
+            android:textStyle="bold"
+            android:textColor="#111827"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tvKembalian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 0"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#2563EB"
+            android:layout_marginTop="8dp"/>
+
+        <!-- BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBayar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="30dp"
+            android:text="Bayar Sekarang"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            app:cornerRadius="16dp"
+            android:backgroundTint="#111827"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -5,50 +5,57 @@ import com.alvaro.projectpenjualan.model.ModelProduk
 
 object CartManager {
 
-    private val list = mutableListOf<ModelCart>()
-    private var listener: (() -> Unit)? = null
+    private val cartList = mutableListOf<ModelCart>()
 
-    fun setOnCartChanged(l: () -> Unit) {
-        listener = l
+    private var onCartChanged: (() -> Unit)? = null
+
+    fun setOnCartChanged(listener: () -> Unit) {
+        onCartChanged = listener
     }
 
-    private fun notifyChange() {
-        listener?.invoke()
-    }
+    fun getAll() = cartList
 
-    fun add(p: ModelProduk) {
-        val item = list.find { it.produk.idProduk == p.idProduk }
-        if (item == null) {
-            list.add(ModelCart(p, 1))
+    fun add(product: ModelProduk) {
+        val existing = cartList.find { it.produk.idProduk == product.idProduk }
+
+        if (existing != null) {
+            existing.qty++
         } else {
-            item.qty++
+            cartList.add(ModelCart(product, 1))
         }
-        notifyChange()
+
+        onCartChanged?.invoke()
     }
 
-    fun increase(p: ModelProduk) {
-        list.find { it.produk.idProduk == p.idProduk }?.let {
+    fun increase(product: ModelProduk) {
+        cartList.find { it.produk.idProduk == product.idProduk }?.let {
             it.qty++
+            onCartChanged?.invoke()
         }
-        notifyChange()
     }
 
-    fun decrease(p: ModelProduk) {
-        list.find { it.produk.idProduk == p.idProduk }?.let {
-            it.qty--
-            if (it.qty <= 0) list.remove(it)
+    fun decrease(product: ModelProduk) {
+        val item = cartList.find { it.produk.idProduk == product.idProduk }
+        if (item != null) {
+            item.qty--
+            if (item.qty <= 0) cartList.remove(item)
+            onCartChanged?.invoke()
         }
-        notifyChange()
     }
 
-    fun remove(p: ModelProduk) {
-        list.removeAll { it.produk.idProduk == p.idProduk }
-        notifyChange()
+    fun remove(product: ModelProduk) {
+        cartList.removeAll { it.produk.idProduk == product.idProduk }
+        onCartChanged?.invoke()
     }
-
-    fun getAll() = list
 
     fun getTotal(): Int {
-        return list.sumOf { it.qty * (it.produk.hargaProduk ?: 0) }
+        return cartList.sumOf {
+            (it.produk.hargaProduk ?: 0) * it.qty
+        }
+    }
+
+    fun clear() {
+        cartList.clear()
+        onCartChanged?.invoke()
     }
 }

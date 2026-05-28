@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.CartManager
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.adapter.AdapterTransaksi
-import com.alvaro.projectpenjualan.BottomSheetCart
+import com.alvaro.projectpenjualan.transaksi.BottomSheetCart
 import com.alvaro.projectpenjualan.model.ModelProduk
 import com.google.firebase.database.*
 
@@ -70,6 +70,7 @@ class DataTransaksi : AppCompatActivity() {
     }
 
     private fun updateMiniCart() {
+        if (!::tvMiniInfo.isInitialized || !::miniCart.isInitialized) return
 
         val totalItem = CartManager.getAll().size
         val totalHarga = CartManager.getTotal()

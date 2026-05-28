@@ -3,7 +3,6 @@ package com.alvaro.projectpenjualan.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
@@ -11,7 +10,7 @@ import com.alvaro.projectpenjualan.model.ModelCart
 import com.alvaro.projectpenjualan.model.ModelProduk
 
 class AdapterCart(
-    private val getData: () -> List<ModelCart>,
+    private val list: List<ModelCart>,
     private val onIncrease: (ModelProduk) -> Unit,
     private val onDecrease: (ModelProduk) -> Unit,
     private val onRemove: (ModelProduk) -> Unit
@@ -23,10 +22,10 @@ class AdapterCart(
         return VH(view)
     }
 
-    override fun getItemCount() = getData().size
+    override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(getData()[position])
+        holder.bind(list[position])
     }
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,17 +46,14 @@ class AdapterCart(
 
             btnPlus.setOnClickListener {
                 onIncrease(item.produk)
-                notifyDataSetChanged()
             }
 
             btnMinus.setOnClickListener {
                 onDecrease(item.produk)
-                notifyDataSetChanged()
             }
 
             btnDelete.setOnClickListener {
                 onRemove(item.produk)
-                notifyDataSetChanged()
             }
         }
     }
