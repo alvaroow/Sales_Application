@@ -1,6 +1,7 @@
 package com.alvaro.projectpenjualan.laporan
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,31 @@ class DataLaporan : AppCompatActivity() {
                     // Supaya yang terbaru ada di atas
                     listRiwayat.reverse()
                     adapter.notifyDataSetChanged()
+
+                    // ... di dalam onCreate DataLaporan.kt setelah set adapter
+
+                    adapter.setOnItemLongClickListener(object : AdapterLaporan.OnItemLongClickListener {
+                        override fun onItemLongClick(transaksi: ModelTransaksi) {
+                            // ✅ 3. Dialog Konfirmasi
+                            androidx.appcompat.app.AlertDialog.Builder(this@DataLaporan)
+                                .setTitle("Hapus Transaksi")
+                                .setMessage("Yakin ingin menghapus transaksi ini?")
+                                .setPositiveButton("Hapus") { _, _ ->
+                                    // ✅ 4. Proses Hapus dari Firebase
+                                    FirebaseDatabase.getInstance().getReference("transaksi")
+                                        .child(transaksi.idTransaksi ?: "")
+                                        .removeValue()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this@DataLaporan, "Transaksi berhasil dihapus", Toast.LENGTH_SHORT).show()
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(this@DataLaporan, "Gagal menghapus", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                                .setNegativeButton("Batal", null)
+                                .show()
+                        }
+                    })
                 }
 
                 override fun onCancelled(error: DatabaseError) {

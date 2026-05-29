@@ -64,10 +64,18 @@ class AdapterProduk(
 
             tvNama.text = p.namaProduk
             tvHarga.text = "Rp ${p.hargaProduk}"
-            tvStok.text = "Stok: ${p.stokProduk}"
+
+            // ✅ LOGIKA STOK TAK TERBATAS
+            if (p.stokProduk == 0) {
+                tvStok.text = "Stok: Tak Terbatas"
+            } else {
+                tvStok.text = "Stok: ${p.stokProduk}"
+            }
 
             tvKategori.text = "Kategori: ${p.idKategori}"
             tvCabang.text = "Cabang: ${p.idCabang}"
+
+            // ... (lanjutan kode lainnya tetap sama)
 
             val status = p.statusProduk ?: "Aktif"
             chipStatus.text = status
@@ -84,7 +92,7 @@ class AdapterProduk(
                 listener?.onItemClick(p)
             }
 
-            // ✅ Tekan tahan (Untuk Hapus)
+            //  Tekan tahan (Untuk Hapus)
             itemView.setOnLongClickListener {
                 longListener?.onItemLongClick(p)
                 true

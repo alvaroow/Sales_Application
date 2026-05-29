@@ -17,6 +17,16 @@ class AdapterLaporan(
     private val list: List<ModelTransaksi>
 ) : RecyclerView.Adapter<AdapterLaporan.VH>() {
 
+    interface OnItemLongClickListener {
+        fun onItemLongClick(transaksi: ModelTransaksi)
+    }
+
+    private var longListener: OnItemLongClickListener? = null
+
+    fun setOnItemLongClickListener(l: OnItemLongClickListener) {
+        longListener = l
+    }
+
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvId: TextView = itemView.findViewById(R.id.tvIdTransaksi)
         val tvTanggal: TextView = itemView.findViewById(R.id.tvTanggalTransaksi)
@@ -41,6 +51,11 @@ class AdapterLaporan(
             "dd-MM-yyyy HH:mm",
             Locale.getDefault()
         ).format(Date(item.tanggal))
+
+        holder.itemView.setOnLongClickListener {
+            longListener?.onItemLongClick(item)
+            true // Mengembalikan true agar klik biasa tidak ikut terpicu
+        }
 
         // Kalau diklik, lemparkan ID Transaksi ke StrukActivity!
         holder.itemView.setOnClickListener {

@@ -10,7 +10,10 @@ import com.alvaro.projectpenjualan.CartManager
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelTransaksi
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -36,7 +39,6 @@ class CheckoutActivity : AppCompatActivity() {
         val namaKasir = intent.getStringExtra("NAMA_KASIR") ?: "Kasir Default"
 
         btnBayar.setOnClickListener {
-
             val bayar = etBayar.text.toString().toIntOrNull() ?: 0
 
             if (bayar < total) {
@@ -54,7 +56,7 @@ class CheckoutActivity : AppCompatActivity() {
                 kembalian = kembalian,
                 tanggal = System.currentTimeMillis(),
                 items = CartManager.getAll().map { it.copy() },
-                namaKasir = namaKasir // ✅ SIMPAN NAMA KASIR KE DATABASE
+                namaKasir = namaKasir
             )
 
             FirebaseDatabase.getInstance()
@@ -62,6 +64,8 @@ class CheckoutActivity : AppCompatActivity() {
                 .child(idTransaksi)
                 .setValue(transaksi)
                 .addOnSuccessListener {
+                    // ✅ PANGGIL FUNGSI PENGURANGAN STOK DI SINI
+                    updateStokDiFirebase()
 
                     Toast.makeText(this, "Checkout berhasil", Toast.LENGTH_SHORT).show()
 
@@ -76,6 +80,38 @@ class CheckoutActivity : AppCompatActivity() {
                 .addOnFailureListener {
                     Toast.makeText(this, "Gagal simpan transaksi", Toast.LENGTH_SHORT).show()
                 }
+        }
+    }
+
+    //  FUNGSI UNTUK MENGURANGI STOK DI FIREBASE
+    private fun updateStokDiFirebase() {
+        val database = FirebaseDatabase.getInstance().getReference("produk")
+
+        for (item in CartManager.getAll()) {
+            // Karena strukturmu: item.produk.idProduk
+            val id = item.produk.idProduk ?: continue
+
+            // Karena strukturmu: item.qty
+            val jumlahDibeli = item.qty
+
+            database.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Ambil stok dari Firebase
+                    val stokLama = snapshot.child("stokProduk").getValue(Int::class.java) ?: 0
+
+                    // Cek jika stok lebih besar dari 0 (bukan stok tak terbatas)
+                    if (stokLama > 0) {
+                        val stokBaru = stokLama - jumlahDibeli
+
+                        // Update ke Firebase
+                        database.child(id).child("stokProduk").setValue(stokBaru)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error jika perlu
+                }
+            })
         }
     }
 }

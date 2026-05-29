@@ -42,31 +42,39 @@ class BottomSheetCart : BottomSheetDialogFragment() {
         btnCheckout = view.findViewById(R.id.btnCheckout)
         spKasir = view.findViewById(R.id.spKasir) // ✅ Inisialisasi
 
-        // ✅ Panggil Data Kasir dari Firebase
+        //  Panggil Data Kasir dari Firebase
         loadKasir()
 
         // Setup aksi tombol Checkout
         btnCheckout.setOnClickListener {
-            val namaKasir = spKasir.text.toString()
+            //  VALIDASI STOK SEBELUM CHECKOUT
+            for (item in CartManager.getAll()) {
+                val stokTersedia = item.produk.stokProduk ?: 0
 
-            // Cegah lanjut kalau kasir belum dipilih
+                // Jika stok > 0 (bukan tak terbatas) dan qty melebihi stok
+                if (stokTersedia > 0 && item.qty > stokTersedia) {
+                    Toast.makeText(requireContext(),
+                        "Stok ${item.produk.namaProduk} tidak mencukupi! (Sisa: $stokTersedia)",
+                        Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+            }
+
+            val namaKasir = spKasir.text.toString()
             if (namaKasir.isEmpty()) {
                 Toast.makeText(requireContext(), "Pilih kasir terlebih dahulu!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Cegah lanjut kalau keranjang kosong
             if (CartManager.getAll().isEmpty()) {
                 Toast.makeText(requireContext(), "Keranjang masih kosong!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val intent = Intent(requireContext(), CheckoutActivity::class.java)
-            // 👇 INI KUNCI UTAMANYA BIAR NAMANYA TERKIRIM
             intent.putExtra("NAMA_KASIR", namaKasir)
             startActivity(intent)
-
-            dismiss() // Tutup bottom sheet
+            dismiss()
         }
 
         rv.layoutManager = LinearLayoutManager(requireContext())
