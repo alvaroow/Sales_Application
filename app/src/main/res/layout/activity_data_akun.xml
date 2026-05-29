@@ -2,21 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FB">
-
-    <TextView
-        android:id="@+id/tvHeaderAkun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profil Akun"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#111827"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    android:background="@color/bg_app"
+    tools:context=".akun.AkunActivity"> <TextView
+    android:id="@+id/tvHeaderAkun"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Profil Akun"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    android:textColor="@color/text_main"
+    android:layout_margin="20dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:layout_margin="20dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/bg_surface"
         app:layout_constraintTop_toBottomOf="@id/tvHeaderAkun">
 
         <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/profile"
-                app:tint="#8B5CF6"/>
+                app:tint="@color/primary" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:text="Alvaro"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#111827"
+                android:textColor="@color/text_main"
                 android:layout_marginTop="16dp"/>
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="Admin Kasir"
                 android:textSize="14sp"
-                android:textColor="#6B7280"
+                android:textColor="@color/text_secondary"
                 android:layout_marginTop="4dp"/>
 
             <com.google.android.material.button.MaterialButton
@@ -64,7 +64,8 @@
                 android:text="Keluar (Logout)"
                 android:layout_marginTop="40dp"
                 app:cornerRadius="12dp"
-                app:backgroundTint="#EF4444"/>
+                android:backgroundTint="@color/red"
+                android:textColor="#FFFFFF"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,120 +7,109 @@
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="18dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="#FFFFFF">
+    app:cardBackgroundColor="@color/bg_surface"> <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="14dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/iconCart"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        app:cardCornerRadius="14dp"
+        app:cardBackgroundColor="@color/bg_app"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:src="@drawable/product"
+            app:tint="@color/text_main"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvNamaCart"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="14dp">
+        android:text="Nama Produk"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_main"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@id/iconCart"
+        app:layout_constraintTop_toTopOf="@id/iconCart"
+        app:layout_constraintEnd_toStartOf="@id/tvHargaCart"/>
 
-        <!-- ICON -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/iconCart"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            app:cardCornerRadius="14dp"
-            app:cardBackgroundColor="#F3F4F6"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/tvHargaCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 0"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvNamaCart"/>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp"
-                android:src="@drawable/product"
-                android:tint="#111827"/>
-        </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/tvQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Qty: 1"
+        android:textSize="12sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@id/tvNamaCart"
+        app:layout_constraintTop_toBottomOf="@id/tvNamaCart"/>
 
-        <!-- NAMA -->
+    <LinearLayout
+        android:id="@+id/actionRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/tvNamaCart"
+        app:layout_constraintTop_toBottomOf="@id/tvQty">
+
         <TextView
-            android:id="@+id/tvNamaCart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Nama Produk"
-            android:textSize="15sp"
+            android:id="@+id/btnMinus"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:gravity="center"
+            android:text="−"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#111827"
-            android:layout_marginStart="12dp"
-            app:layout_constraintStart_toEndOf="@id/iconCart"
-            app:layout_constraintTop_toTopOf="@id/iconCart"
-            app:layout_constraintEnd_toStartOf="@id/tvHargaCart"/>
+            android:textColor="@color/red"
+            android:background="#FFE4E4"
+            android:layout_marginEnd="8dp"/>
 
-        <!-- HARGA -->
         <TextView
-            android:id="@+id/tvHargaCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rp 0"
-            android:textSize="14sp"
+            android:id="@+id/btnPlus"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:gravity="center"
+            android:text="+"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#16A34A"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvNamaCart"/>
+            android:textColor="@color/green"
+            android:background="#DCFCE7"
+            android:layout_marginEnd="10dp"/>
 
-        <!-- QTY LABEL -->
         <TextView
-            android:id="@+id/tvQty"
+            android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Qty: 1"
+            android:layout_height="34dp"
+            android:gravity="center"
+            android:text="Hapus"
             android:textSize="12sp"
-            android:textColor="#6B7280"
-            android:layout_marginTop="6dp"
-            app:layout_constraintStart_toStartOf="@id/tvNamaCart"
-            app:layout_constraintTop_toBottomOf="@id/tvNamaCart"/>
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@color/red"
+            android:paddingHorizontal="14dp"/>
+    </LinearLayout>
 
-        <!-- ACTION ROW -->
-        <LinearLayout
-            android:id="@+id/actionRow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@id/tvNamaCart"
-            app:layout_constraintTop_toBottomOf="@id/tvQty">
-
-            <!-- MINUS -->
-            <TextView
-                android:id="@+id/btnMinus"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:gravity="center"
-                android:text="−"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#DC2626"
-                android:background="#FEE2E2"
-                android:layout_marginEnd="8dp"/>
-
-            <!-- PLUS -->
-            <TextView
-                android:id="@+id/btnPlus"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:gravity="center"
-                android:text="+"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#16A34A"
-                android:background="#DCFCE7"
-                android:layout_marginEnd="10dp"/>
-
-            <!-- DELETE (PILL BUTTON) -->
-            <TextView
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:gravity="center"
-                android:text="Hapus"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="#EF4444"
-                android:paddingHorizontal="14dp"/>
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

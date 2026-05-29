@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6FB"
     android:fillViewport="true"
-    tools:context=".produk.ModProduk">
+    android:background="@color/bg_app">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -15,15 +15,14 @@
         android:padding="16dp"
         tools:context=".produk.ModProduk">
 
-        <!-- HEADER -->
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tambah Produk"
             android:textStyle="bold"
-            android:textSize="22sp"
-            android:textColor="#111827"
+            android:textSize="24sp"
+            android:textColor="@color/text_main"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -33,36 +32,35 @@
             android:layout_height="wrap_content"
             android:text="Kelola produk POS kamu"
             android:textSize="13sp"
-            android:textColor="#6B7280"
+            android:textColor="@color/text_secondary"
             app:layout_constraintTop_toBottomOf="@id/tvHeader"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <!-- IMAGE UPLOAD CARD -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/bg_surface"
             app:layout_constraintTop_toBottomOf="@id/tvSubHeader"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/ivPreview"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/camera"
-                    app:tint="#9CA3AF"
-                    android:layout_marginTop="25dp"
+                    app:tint="@color/text_secondary"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/tvUpload"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -71,190 +69,161 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tambah Foto Produk"
-                    android:textColor="#6B7280"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/ivPreview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <!-- BUTTON CAMERA -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCamera"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="48dp"
                     android:text="Kamera"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     app:icon="@drawable/camera"
                     app:cornerRadius="10dp"
-                    app:backgroundTint="#1E293B"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:backgroundTint="@color/primary"
+                    app:layout_constraintTop_toBottomOf="@id/tvUpload"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnGallery" />
+                    app:layout_constraintEnd_toStartOf="@id/btnGallery"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <!-- BUTTON GALLERY -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGallery"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="48dp"
                     android:text="Galeri"
+                    android:layout_marginTop="16dp"
                     app:cornerRadius="10dp"
-                    app:backgroundTint="#334155"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:backgroundTint="@color/secondary"
+                    app:layout_constraintTop_toBottomOf="@id/tvUpload"
                     app:layout_constraintStart_toEndOf="@id/btnCamera"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- NAMA -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNama"
-            android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Nama Produk"
-            app:boxCornerRadiusTopStart="14dp"
-            app:boxCornerRadiusTopEnd="14dp"
-            app:boxCornerRadiusBottomStart="14dp"
-            app:boxCornerRadiusBottomEnd="14dp"
-            app:layout_constraintTop_toBottomOf="@id/cardImage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/cardImage">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNama"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- HARGA -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilHarga"
-            android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Harga"
-            app:layout_constraintTop_toBottomOf="@id/tilNama"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/tilNama">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHarga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- KATEGORI -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilKategori"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Kategori"
-            app:layout_constraintTop_toBottomOf="@id/tilHarga"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/tilHarga">
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/spKategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:focusable="false"
-                android:clickable="true"
-                android:cursorVisible="false"/>
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- CABANG -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilCabang"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Cabang"
-            app:layout_constraintTop_toBottomOf="@id/tilKategori"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/tilKategori">
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/spCabang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:focusable="false"
-                android:clickable="true"
-                android:cursorVisible="false"/>
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- STOK -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilStok"
-            android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Stok"
-            app:layout_constraintTop_toBottomOf="@id/tilCabang"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/tilCabang">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etStok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- CHECKBOX -->
         <CheckBox
             android:id="@+id/cbUnlimited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stok Tak Terbatas"
-            android:textColor="#374151"
+            android:textColor="@color/text_main"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/tilStok"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <!-- STATUS -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilStatusProduk"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Status"
-            app:layout_constraintTop_toBottomOf="@id/cbUnlimited"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintTop_toBottomOf="@id/cbUnlimited">
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/spStatusProduk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:focusable="false"
-                android:clickable="true"
-                android:cursorVisible="false"/>
+                android:textColor="@color/text_main"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- BUTTON SIMPAN -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSimpan"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
             android:text="Simpan Produk"
             android:textStyle="bold"
-            android:layout_marginTop="18dp"
             app:cornerRadius="16dp"
-            app:backgroundTint="#1E293B"
+            app:backgroundTint="@color/text_main"
+            android:textColor="@color/bg_app"
             app:layout_constraintTop_toBottomOf="@id/tilStatusProduk"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

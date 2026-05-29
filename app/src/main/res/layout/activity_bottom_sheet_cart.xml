@@ -5,14 +5,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#FFFFFF">
-
-    <View
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:background="#E5E7EB"
-        android:layout_gravity="center"
-        android:layout_marginBottom="12dp"/>
+    android:background="@color/bg_surface"> <View
+    android:layout_width="40dp"
+    android:layout_height="4dp"
+    android:background="@color/text_secondary"
+    android:layout_gravity="center"
+    android:layout_marginBottom="12dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,14 +18,14 @@
         android:text="Keranjang Belanja"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:textColor="#111827"/>
+        android:textColor="@color/text_main"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pilih dan atur produk sebelum checkout"
         android:textSize="12sp"
-        android:textColor="#6B7280"
+        android:textColor="@color/text_secondary"
         android:layout_marginBottom="12dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -40,7 +38,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E5E7EB"
+        android:background="@color/text_secondary"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"/>
 
@@ -59,8 +57,8 @@
             android:inputType="none"
             android:focusable="false"
             android:clickable="true"
-            android:cursorVisible="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:cursorVisible="false"
+            android:textColor="@color/text_main"/> </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +71,7 @@
             android:text="Total"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#111827"/>
+            android:textColor="@color/text_main"/>
 
         <TextView
             android:id="@+id/tvTotal"
@@ -83,7 +81,7 @@
             android:textSize="16sp"
             android:layout_marginStart="6dp"
             android:textStyle="bold"
-            android:textColor="#16A34A"/>
+            android:textColor="@color/green"/>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -95,6 +93,4 @@
         android:textStyle="bold"
         android:layout_marginTop="12dp"
         app:cornerRadius="12dp"
-        android:backgroundTint="#2563EB"/>
-
-</LinearLayout>
+        android:backgroundTint="@color/primary"/> </LinearLayout>

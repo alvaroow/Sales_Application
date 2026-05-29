@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red">#F44336</color>
-    <color name="green">#4CAF50</color>
+    <!-- Warna Utama & Aksen -->
+    <color name="primary">#4F46E5</color>
+    <color name="secondary">#818CF8</color>
+    <color name="green">#22C55E</color>
+    <color name="red">#EF4444</color>
+
+    <!-- Background & Surface (Terang) -->
+    <color name="bg_app">#F9FAFB</color>
+    <color name="bg_surface">#FFFFFF</color>
+
+    <!-- Teks (Gelap) -->
+    <color name="text_main">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
 </resources>

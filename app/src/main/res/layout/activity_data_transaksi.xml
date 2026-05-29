@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6FB"
+    android:background="@color/bg_app"
     tools:context=".transaksi.DataTransaksi">
 
     <TextView
@@ -15,6 +15,7 @@
         android:text="Transaksi"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:textColor="@color/text_main"
         android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:text="Pilih produk untuk transaksi"
         android:textSize="13sp"
+        android:textColor="@color/text_secondary"
         android:layout_marginStart="16dp"
         app:layout_constraintTop_toBottomOf="@id/tvHeader"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -36,6 +38,7 @@
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/bg_surface"
         app:layout_constraintTop_toBottomOf="@id/tvSub"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,8 +58,13 @@
     <include
         android:id="@+id/mini_bottom_sheet"
         layout="@layout/mini_bottom_sheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

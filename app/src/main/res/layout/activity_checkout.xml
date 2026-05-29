@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6FB">
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:background="@color/bg_app">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,31 +14,29 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- HEADER -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Checkout"
             android:textStyle="bold"
             android:textSize="24sp"
-            android:textColor="#111827"/>
+            android:textColor="@color/text_main"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Konfirmasi pembayaran transaksi"
-            android:textColor="#6B7280"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:layout_marginTop="4dp"/>
 
-        <!-- CARD TOTAL -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:cardCornerRadius="18dp"
             app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
+            app:cardBackgroundColor="@color/bg_surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Pembayaran"
-                    android:textColor="#6B7280"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp"/>
 
                 <TextView
@@ -57,19 +58,17 @@
                     android:text="Rp 0"
                     android:textStyle="bold"
                     android:textSize="28sp"
-                    android:textColor="#16A34A"
+                    android:textColor="@color/green"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- INPUT BAYAR -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Uang Bayar"
             android:textStyle="bold"
-            android:textColor="#111827"
+            android:textColor="@color/text_main"
             android:layout_marginTop="22dp"/>
 
         <EditText
@@ -77,18 +76,19 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="8dp"
-            android:background="@android:color/white"
+            android:background="@color/bg_surface"
+            android:textColor="@color/text_main"
             android:paddingHorizontal="14dp"
             android:hint="Masukkan uang bayar"
+            android:textColorHint="@color/text_secondary"
             android:inputType="number"/>
 
-        <!-- KEMBALIAN -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kembalian"
             android:textStyle="bold"
-            android:textColor="#111827"
+            android:textColor="@color/text_main"
             android:layout_marginTop="20dp"/>
 
         <TextView
@@ -98,10 +98,9 @@
             android:text="Rp 0"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#2563EB"
+            android:textColor="@color/primary"
             android:layout_marginTop="8dp"/>
 
-        <!-- BUTTON -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBayar"
             android:layout_width="match_parent"
@@ -111,8 +110,8 @@
             android:textStyle="bold"
             android:textSize="15sp"
             app:cornerRadius="16dp"
-            android:backgroundTint="#111827"/>
+            android:backgroundTint="@color/text_main"
+            android:textColor="@color/bg_app"/>
 
     </LinearLayout>
-
 </ScrollView>

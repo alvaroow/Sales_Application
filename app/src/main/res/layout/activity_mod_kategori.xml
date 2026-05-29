@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6FB"
+    android:background="@color/bg_app"
     android:padding="16dp"
     tools:context=".kategori.ModKategori">
 
-    <!-- HEADER -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvHeaderMod"
         android:layout_width="0dp"
@@ -23,7 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1E293B"
+            android:background="@color/primary"
             android:padding="18dp"
             android:orientation="vertical">
 
@@ -41,21 +41,20 @@
                 android:layout_height="wrap_content"
                 android:text="Kelola kategori produk POS kamu"
                 android:textSize="13sp"
-                android:textColor="#CBD5E1"
+                android:textColor="#E0E7FF"
                 android:layout_marginTop="6dp"/>
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
-    <!-- FORM CARD -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvForm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/bg_surface"
         app:layout_constraintTop_toBottomOf="@id/cvHeaderMod"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -66,9 +65,9 @@
             android:orientation="vertical"
             android:padding="18dp">
 
-            <!-- NAMA -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilModKategori_Nama"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama Kategori"
@@ -81,10 +80,10 @@
                     android:id="@+id/etNamaKategori"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="@color/text_main"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- STATUS -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilModKategori_Status"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -98,15 +97,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:labelFor="@id/spModKategori_Status"
-                    tools:text="" />
+                    android:textColor="@color/text_main" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
-    <!-- BUTTON -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnModKategori_Simpan"
         android:layout_width="0dp"
@@ -117,7 +113,8 @@
         android:textSize="15sp"
         android:layout_marginTop="22dp"
         app:cornerRadius="16dp"
-        app:backgroundTint="#1E293B"
+        app:backgroundTint="@color/text_main"
+        android:textColor="@color/bg_app"
         app:layout_constraintTop_toBottomOf="@id/cvForm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

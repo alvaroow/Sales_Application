@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:scrollbars="none"
-    android:background="#F5F7FB">
+    android:background="@color/bg_app">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -15,14 +15,13 @@
         android:padding="16dp"
         tools:context=".MainActivity">
 
-        <!-- HEADER -->
         <androidx.cardview.widget.CardView
             android:id="@+id/headerCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="28dp"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#0F5C6C"
+            app:cardBackgroundColor="@color/primary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -54,14 +53,13 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- CARD UTAMA -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cv1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/bg_surface"
             app:layout_constraintTop_toBottomOf="@id/headerCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -78,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="Estimasi Hari Ini"
                     android:textSize="14sp"
-                    android:textColor="#6B7280" />
+                    android:textColor="@color/text_secondary" />
 
                 <TextView
                     android:id="@+id/Uang"
@@ -87,7 +85,7 @@
                     android:text="Rp0"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:textColor="#10B981"
+                    android:textColor="@color/green"
                     android:layout_marginTop="4dp" />
 
                 <LinearLayout
@@ -96,7 +94,6 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="16dp">
 
-                    <!-- TRANSAKSI -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -110,7 +107,7 @@
                             android:layout_height="56dp"
                             app:cardCornerRadius="18dp"
                             app:cardElevation="2dp"
-                            app:cardBackgroundColor="#10B981">
+                            app:cardBackgroundColor="@color/green">
 
                             <ImageView
                                 android:id="@+id/ivcart"
@@ -118,7 +115,7 @@
                                 android:layout_height="match_parent"
                                 android:padding="14dp"
                                 android:src="@drawable/cart"
-                                android:tint="#FFFFFF" />
+                                app:tint="#FFFFFF" />
                         </androidx.cardview.widget.CardView>
 
                         <TextView
@@ -128,11 +125,10 @@
                             android:text="Transaksi"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="#374151"
+                            android:textColor="@color/text_main"
                             android:layout_marginTop="8dp" />
                     </LinearLayout>
 
-                    <!-- LAPORAN -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -146,7 +142,7 @@
                             android:layout_height="56dp"
                             app:cardCornerRadius="18dp"
                             app:cardElevation="2dp"
-                            app:cardBackgroundColor="#3B82F6">
+                            app:cardBackgroundColor="@color/primary">
 
                             <ImageView
                                 android:id="@+id/ivnote"
@@ -154,7 +150,7 @@
                                 android:layout_height="match_parent"
                                 android:padding="14dp"
                                 android:src="@drawable/note"
-                                android:tint="#FFFFFF" />
+                                app:tint="#FFFFFF" />
                         </androidx.cardview.widget.CardView>
 
                         <TextView
@@ -163,10 +159,9 @@
                             android:text="Laporan"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="#374151"
+                            android:textColor="@color/text_main"
                             android:layout_marginTop="8dp" />
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <TextView
@@ -175,7 +170,7 @@
                     android:text="Siap melayani pelanggan dengan setulus hati"
                     android:textSize="12sp"
                     android:textStyle="italic"
-                    android:textColor="#6B7280"
+                    android:textColor="@color/text_secondary"
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center" />
 
@@ -185,14 +180,12 @@
                     android:text="Jangan Kecewakan Pelanggan"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#EF4444"
+                    android:textColor="@color/red"
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center" />
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- GRID MENU -->
         <GridLayout
             android:id="@+id/menuGrid"
             android:layout_width="0dp"
@@ -204,9 +197,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- SEMUA CARD TETAP, HANYA RAPIKAN STYLE -->
-
-            <!-- Produk -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv3"
                 android:layout_width="0dp"
@@ -214,33 +204,29 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivproduct"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/product"
-                        android:tint="#3B82F6" />
-
+                        app:tint="@color/primary" />
                     <TextView
                         android:text="Produk"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Kategori -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv4"
                 android:layout_width="0dp"
@@ -248,33 +234,29 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivkategori"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/kategori"
-                        android:tint="#10B981" />
-
+                        app:tint="@color/green" />
                     <TextView
                         android:text="Kategori"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Pegawai -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv5"
                 android:layout_width="0dp"
@@ -282,33 +264,29 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivpegawai"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/pegawai"
-                        android:tint="#EC4899" />
-
+                        app:tint="#EC4899" />
                     <TextView
                         android:text="Pegawai"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Akun -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv2"
                 android:layout_width="0dp"
@@ -316,33 +294,29 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivprofile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/profile"
-                        android:tint="#8B5CF6" />
-
+                        app:tint="#8B5CF6" />
                     <TextView
                         android:text="Akun"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Cabang -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv6"
                 android:layout_width="0dp"
@@ -350,33 +324,29 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivcabang"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/cabang"
-                        android:tint="#F97316" />
-
+                        app:tint="#F97316" />
                     <TextView
                         android:text="Cabang"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Printer -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv7"
                 android:layout_width="0dp"
@@ -384,26 +354,23 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                app:cardBackgroundColor="@color/bg_surface">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/ivprinter"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/printer"
-                        android:tint="#14B8A6" />
-
+                        app:tint="#14B8A6" />
                     <TextView
                         android:text="Printer"
                         android:textStyle="bold"
                         android:textSize="13sp"
-                        android:textColor="#1F2937"
+                        android:textColor="@color/text_main"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
