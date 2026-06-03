@@ -3,6 +3,7 @@ package com.alvaro.projectpenjualan.cabang
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alvaro.projectpenjualan.R
@@ -13,10 +14,11 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ModCabang : AppCompatActivity() {
 
+    lateinit var tvHeader: TextView
     lateinit var etNama: TextInputEditText
     lateinit var etAlamat: TextInputEditText
     lateinit var etTelp: TextInputEditText
-    lateinit var spStatus: AutoCompleteTextView // ✅ Tambahan Dropdown Status
+    lateinit var spStatus: AutoCompleteTextView
     lateinit var btnSimpan: MaterialButton
 
     private val db = FirebaseDatabase.getInstance().getReference("cabang")
@@ -29,7 +31,7 @@ class ModCabang : AppCompatActivity() {
 
         init()
 
-        // ✅ Setup Dropdown Status
+
         val statusList = arrayOf("Aktif", "Non Aktif")
         val adapterStatus = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, statusList)
         spStatus.setAdapter(adapterStatus)
@@ -37,6 +39,7 @@ class ModCabang : AppCompatActivity() {
         idCabangEdit = intent.getStringExtra("ID")
 
         if (idCabangEdit != null) {
+            tvHeader.text = "Edit Cabang"
             etNama.setText(intent.getStringExtra("NAMA"))
             etAlamat.setText(intent.getStringExtra("ALAMAT"))
             etTelp.setText(intent.getStringExtra("TELP"))
@@ -60,7 +63,7 @@ class ModCabang : AppCompatActivity() {
         val nama = etNama.text.toString()
         val alamat = etAlamat.text.toString()
         val telp = etTelp.text.toString()
-        val status = spStatus.text.toString() // ✅ Ambil status dari dropdown
+        val status = spStatus.text.toString()
 
         if (nama.isEmpty() || alamat.isEmpty()) {
             Toast.makeText(this, "Lengkapi data", Toast.LENGTH_SHORT).show()
@@ -74,7 +77,7 @@ class ModCabang : AppCompatActivity() {
             namaCabang = nama,
             alamatCabang = alamat,
             telpCabang = telp,
-            statusCabang = status // ✅ Simpan status yang dipilih
+            statusCabang = status
         )
 
         db.child(id).setValue(cabang)
@@ -86,10 +89,11 @@ class ModCabang : AppCompatActivity() {
     }
 
     private fun init() {
+        tvHeader = findViewById(R.id.tvHeader)
         etNama = findViewById(R.id.etNamaCabang)
         etAlamat = findViewById(R.id.etAlamatCabang)
         etTelp = findViewById(R.id.etTelpCabang)
-        spStatus = findViewById(R.id.spStatusCabang) // ✅ Hubungkan ID
+        spStatus = findViewById(R.id.spStatusCabang)
         btnSimpan = findViewById(R.id.btnSimpanCabang)
     }
 }

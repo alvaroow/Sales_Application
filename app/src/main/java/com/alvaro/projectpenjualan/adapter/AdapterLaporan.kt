@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelTransaksi
 import com.alvaro.projectpenjualan.transaksi.StrukActivity
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -16,16 +17,6 @@ import java.util.Locale
 class AdapterLaporan(
     private val list: List<ModelTransaksi>
 ) : RecyclerView.Adapter<AdapterLaporan.VH>() {
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(transaksi: ModelTransaksi)
-    }
-
-    private var longListener: OnItemLongClickListener? = null
-
-    fun setOnItemLongClickListener(l: OnItemLongClickListener) {
-        longListener = l
-    }
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvId: TextView = itemView.findViewById(R.id.tvIdTransaksi)
@@ -45,17 +36,16 @@ class AdapterLaporan(
         val item = list[position]
 
         holder.tvId.text = item.idTransaksi
-        holder.tvTotal.text = "Rp ${item.total}"
+        
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+        holder.tvTotal.text = formatRupiah.format(item.total)
+            .replace("Rp", "Rp ")
+            .replace(",00", "")
 
         holder.tvTanggal.text = SimpleDateFormat(
             "dd-MM-yyyy HH:mm",
             Locale.getDefault()
         ).format(Date(item.tanggal))
-
-        holder.itemView.setOnLongClickListener {
-            longListener?.onItemLongClick(item)
-            true // Mengembalikan true agar klik biasa tidak ikut terpicu
-        }
 
         // Kalau diklik, lemparkan ID Transaksi ke StrukActivity!
         holder.itemView.setOnClickListener {

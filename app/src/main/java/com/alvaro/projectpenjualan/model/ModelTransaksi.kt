@@ -7,5 +7,6 @@ data class ModelTransaksi(
     val kembalian: Int = 0,
     val tanggal: Long = 0L,
     val items: List<ModelCart> = emptyList(),
-    val namaKasir: String = ""
+    val namaKasir: String = "",
+    val namaPemesan: String = ""
 )

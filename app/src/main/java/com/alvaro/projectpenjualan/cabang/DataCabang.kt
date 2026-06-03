@@ -19,6 +19,7 @@ class DataCabang : AppCompatActivity() {
     private lateinit var rvCabang: RecyclerView
     private lateinit var fabTambah: FloatingActionButton
     private lateinit var tvHeader: TextView
+    private lateinit var svCabang: android.widget.SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +29,14 @@ class DataCabang : AppCompatActivity() {
         setupRecycler()
         observeData()
         setupListener()
+        setupSearchView()
     }
 
     private fun init() {
         rvCabang = findViewById(R.id.rvCabang)
         fabTambah = findViewById(R.id.fabTambahCabang)
         tvHeader = findViewById(R.id.tvHeader)
+        svCabang = findViewById(R.id.svCabang)
     }
 
     private fun setupRecycler() {
@@ -97,5 +100,18 @@ class DataCabang : AppCompatActivity() {
                 Intent(this, ModCabang::class.java)
             )
         }
+    }
+
+    private fun setupSearchView() {
+        svCabang.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                vm.filterList(newText)
+                return true
+            }
+        })
     }
 }

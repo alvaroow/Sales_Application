@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjectPenjualan</string>
+    <string name="app_name">KasirKita</string>
     <string-array name="Status">
         <item>Aktif</item>
         <item>Non Aktif</item>

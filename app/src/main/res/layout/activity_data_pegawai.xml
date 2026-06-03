@@ -14,12 +14,12 @@
         android:id="@+id/tvHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Data Pegawai"
+        android:text="Kasir/Pegawai"
         android:textStyle="bold"
-        android:textSize="22sp"
+        android:textSize="40sp"
         android:textColor="@color/text_main"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -28,12 +28,13 @@
         android:id="@+id/tvSubHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Kelola seluruh data pegawai dan kasir"
-        android:textSize="13sp"
+        android:text="Kelola Seluruh Data Pegawai Kasir Kita"
+        android:textSize="20sp"
         android:textColor="@color/text_secondary"
-        android:layout_marginStart="16dp"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/tvHeader"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- SEARCH CARD -->
     <androidx.cardview.widget.CardView

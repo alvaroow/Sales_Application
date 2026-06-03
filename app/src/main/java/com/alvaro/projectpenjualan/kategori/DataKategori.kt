@@ -20,14 +20,16 @@ class DataKategori : AppCompatActivity() {
     private val viewModel: DataKategoriViewModel by viewModels()
     private lateinit var rvDATAKATEGORI: RecyclerView
     private lateinit var fabDATAKATEGORITambah: FloatingActionButton
+    private lateinit var svKategori: android.widget.SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_kategori)
 
         init()
+        setupSearchView()
 
-        // ✅ Sudah dikembalikan ke tampilan list memanjang ke bawah
+
         rvDATAKATEGORI.layoutManager = LinearLayoutManager(this)
         rvDATAKATEGORI.setHasFixedSize(true)
 
@@ -78,9 +80,23 @@ class DataKategori : AppCompatActivity() {
     private fun init() {
         rvDATAKATEGORI = findViewById(R.id.rvDATA_KATEGORI)
         fabDATAKATEGORITambah = findViewById(R.id.fabDATA_KATEGORI_Tambah)
+        svKategori = findViewById(R.id.svKategori)
 
         fabDATAKATEGORITambah.setOnClickListener {
             startActivity(Intent(this, ModKategori::class.java))
         }
+    }
+
+    private fun setupSearchView() {
+        svKategori.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filterList(newText)
+                return true
+            }
+        })
     }
 }

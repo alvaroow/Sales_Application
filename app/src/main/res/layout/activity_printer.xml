@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_app"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pengaturan Printer"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_main"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/bg_surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Printer Tersedia"
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBluetoothDevices"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Refresh Perangkat"
+                android:layout_marginTop="16dp"
+                app:backgroundTint="@color/primary"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTestPrint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Test Print"
+                android:layout_marginTop="8dp"
+                app:backgroundTint="@color/green"
+                android:enabled="false"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

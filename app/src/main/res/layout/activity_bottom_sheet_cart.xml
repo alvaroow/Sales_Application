@@ -1,96 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/bg_surface"> <View
-    android:layout_width="40dp"
-    android:layout_height="4dp"
-    android:background="@color/text_secondary"
-    android:layout_gravity="center"
-    android:layout_marginBottom="12dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Keranjang Belanja"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/text_main"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pilih dan atur produk sebelum checkout"
-        android:textSize="12sp"
-        android:textColor="@color/text_secondary"
-        android:layout_marginBottom="12dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="6dp"
-        android:overScrollMode="never"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/text_secondary"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilKasir"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="Pilih Kasir / Pegawai">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/spKasir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:focusable="false"
-            android:clickable="true"
-            android:cursorVisible="false"
-            android:textColor="@color/text_main"/> </com.google.android.material.textfield.TextInputLayout>
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_bottom_sheet">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Handle Bar -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="#E5E7EB"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Header Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keranjang Belanja"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_main"
+            android:gravity="center"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_main"/>
+            android:text="Atur pesanan pelanggan di sini"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
 
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCart"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rp 0"
-            android:textSize="16sp"
-            android:layout_marginStart="6dp"
-            android:textStyle="bold"
-            android:textColor="@color/green"/>
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Input Pegawai/Kasir -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilKasir"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="Pilih Kasir"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/spKasir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="@color/text_main"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Footer Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/bg_app">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Pembayaran"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"/>
+
+                    <TextView
+                        android:id="@+id/tvTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Rp 0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"/>
+                </RelativeLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCheckout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Konfirmasi &amp; Checkout"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/primary"
+                    android:textColor="@color/bg_surface"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCheckout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Checkout"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:layout_marginTop="12dp"
-        app:cornerRadius="12dp"
-        android:backgroundTint="@color/primary"/> </LinearLayout>
+</androidx.core.widget.NestedScrollView>

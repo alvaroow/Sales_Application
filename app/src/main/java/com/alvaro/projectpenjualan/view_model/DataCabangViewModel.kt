@@ -49,7 +49,7 @@ class DataCabangViewModel : ViewModel() {
             })
     }
 
-    // ✅ TOGGLE STATUS (Ditambahkan biar serasi dengan Kategori)
+
     fun toggleStatus(cabang: ModelCabang) {
         val id = cabang.idCabang ?: return
 
@@ -65,7 +65,7 @@ class DataCabangViewModel : ViewModel() {
         cabangList.value = originalCabangList
     }
 
-    // ✅ FILTER LIST (Ditambahkan buat fitur pencarian)
+
     fun filterList(query: String?) {
         if (query.isNullOrEmpty()) {
             cabangList.value = originalCabangList

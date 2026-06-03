@@ -25,7 +25,7 @@ class ModKategori : AppCompatActivity() {
     private lateinit var spStatusKategori : AutoCompleteTextView
     private lateinit var btSimpan : MaterialButton
 
-    // ✅ Variabel penampung Mode Edit
+
     private var idKategoriEdit: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class ModKategori : AppCompatActivity() {
             insets
         }
 
-        tvJudul = findViewById(R.id.tvTambahKate)
+        tvJudul = findViewById(R.id.tvHeader)
         etNamaKategori = findViewById(R.id.etNamaKategori)
         tvStatusKategori = findViewById(R.id.tilModKategori_Status)
         spStatusKategori = findViewById(R.id.spModKategori_Status)
@@ -49,14 +49,16 @@ class ModKategori : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line,statusList)
         spStatusKategori.setAdapter(adapter)
 
-        // ✅ Cek apakah ini mode Edit
+
         idKategoriEdit = intent.getStringExtra("ID")
         if (idKategoriEdit != null) {
+            tvJudul.text = "Edit Kategori"
             etNamaKategori.setText(intent.getStringExtra("NAMA"))
             val status = intent.getStringExtra("STATUS") ?: "Aktif"
             spStatusKategori.setText(status, false)
             btSimpan.text = "Update Kategori"
         } else {
+            tvJudul.text = "Tambah Kategori"
             if (statusList.isNotEmpty()) spStatusKategori.setText(statusList[0],false)
         }
 
@@ -69,7 +71,7 @@ class ModKategori : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // ✅ Gunakan ID lama jika Edit, buat ID baru jika Simpan
+
             val key = idKategoriEdit ?: myRef.push().key
 
             if (key != null) {

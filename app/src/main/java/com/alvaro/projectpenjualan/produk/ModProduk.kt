@@ -1,13 +1,8 @@
 package com.alvaro.projectpenjualan.produk
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.alvaro.projectpenjualan.R
 import com.google.android.material.button.MaterialButton
@@ -18,17 +13,16 @@ import com.alvaro.projectpenjualan.model.ModelProduk
 
 class ModProduk : AppCompatActivity() {
 
+    private lateinit var tvHeader: TextView
     private lateinit var ivPreview: ImageView
     private lateinit var etNama: TextInputEditText
     private lateinit var etHarga: TextInputEditText
     private lateinit var etStok: TextInputEditText
     private lateinit var cbUnlimited: CheckBox
     private lateinit var btnSimpan: MaterialButton
-    private lateinit var btnCamera: MaterialButton
-    private lateinit var btnGallery: MaterialButton
     private lateinit var spKategori: MaterialAutoCompleteTextView
     private lateinit var spCabang: MaterialAutoCompleteTextView
-    private lateinit var spStatus: MaterialAutoCompleteTextView // ✅ Tambahan Dropdown Status
+    private lateinit var spStatus: MaterialAutoCompleteTextView
 
     private var imageUri: Uri? = null
 
@@ -49,9 +43,11 @@ class ModProduk : AppCompatActivity() {
         setupDropdown()
         loadKategori()
         loadCabang()
+        saveProduk()
 
         idProdukEdit = intent.getStringExtra("ID")
         if (idProdukEdit != null) {
+            tvHeader.text = "Edit Produk"
             etNama.setText(intent.getStringExtra("NAMA"))
             etHarga.setText(intent.getStringExtra("HARGA"))
 
@@ -69,7 +65,7 @@ class ModProduk : AppCompatActivity() {
             spKategori.setText(intent.getStringExtra("KATEGORI"), false)
             spCabang.setText(intent.getStringExtra("CABANG"), false)
 
-            // ✅ Set status lama di form
+
             val statusLama = intent.getStringExtra("STATUS") ?: "Aktif"
             spStatus.setText(statusLama, false)
 
@@ -82,35 +78,33 @@ class ModProduk : AppCompatActivity() {
 
             btnSimpan.text = "Update Produk"
         } else {
-            // ✅ Set default saat tambah baru
+
             spStatus.setText("Aktif", false)
         }
     }
 
     private fun initView() {
-        ivPreview = findViewById(R.id.ivPreview)
+        tvHeader = findViewById(R.id.tvHeader)
         etNama = findViewById(R.id.etNama)
         etHarga = findViewById(R.id.etHarga)
         etStok = findViewById(R.id.etStok)
         cbUnlimited = findViewById(R.id.cbUnlimited)
         btnSimpan = findViewById(R.id.btnSimpan)
-        btnCamera = findViewById(R.id.btnCamera)
-        btnGallery = findViewById(R.id.btnGallery)
         spKategori = findViewById(R.id.spKategori)
         spCabang = findViewById(R.id.spCabang)
-        spStatus = findViewById(R.id.spStatusProduk) // ✅ Hubungkan ID Status
+        spStatus = findViewById(R.id.spStatusProduk)
     }
 
     private fun setupDropdown() {
         spKategori.setOnClickListener { spKategori.showDropDown() }
         spCabang.setOnClickListener { spCabang.showDropDown() }
-        spStatus.setOnClickListener { spStatus.showDropDown() } // ✅ Setup klik status
+        spStatus.setOnClickListener { spStatus.showDropDown() }
 
         spKategori.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spKategori.showDropDown() }
         spCabang.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spCabang.showDropDown() }
-        spStatus.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spStatus.showDropDown() } // ✅ Setup fokus status
+        spStatus.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) spStatus.showDropDown() }
 
-        // ✅ Setup adapter status
+
         val statusList = arrayOf("Aktif", "Non Aktif")
         val adapterStatus = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, statusList)
         spStatus.setAdapter(adapterStatus)
@@ -147,28 +141,18 @@ class ModProduk : AppCompatActivity() {
     }
 
     private fun setupListener() {
+
         cbUnlimited.setOnCheckedChangeListener { _, isChecked ->
             etStok.isEnabled = !isChecked
             if (isChecked) etStok.setText("0")
         }
-        btnCamera.setOnClickListener { cameraLauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE)) }
-        btnGallery.setOnClickListener { galleryLauncher.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)) }
-        btnSimpan.setOnClickListener { saveProduk() }
-    }
 
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val bitmap = result.data?.extras?.get("data") as Bitmap
-            ivPreview.setImageBitmap(bitmap)
+        btnSimpan.setOnClickListener {
+            saveProduk()
         }
     }
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            imageUri = result.data?.data
-            ivPreview.setImageURI(imageUri)
-        }
-    }
+
 
     private fun saveProduk() {
         val nama = etNama.text.toString()
@@ -176,7 +160,7 @@ class ModProduk : AppCompatActivity() {
         val stok = if (cbUnlimited.isChecked) "0" else etStok.text.toString()
         val kategori = spKategori.text.toString()
         val cabang = spCabang.text.toString()
-        val status = spStatus.text.toString() // ✅ Ambil status dari form dropdown
+        val status = spStatus.text.toString()
 
         if (nama.isEmpty() || harga.isEmpty() || kategori.isEmpty() || cabang.isEmpty() || status.isEmpty()) {
             Toast.makeText(this, "Lengkapi semua data", Toast.LENGTH_SHORT).show()
@@ -193,7 +177,7 @@ class ModProduk : AppCompatActivity() {
             idCabang = cabang,
             fotoProduk = imageUri?.toString() ?: fotoProdukLama,
             stokProduk = stok.toInt(),
-            statusProduk = status, // ✅ Simpan status baru
+            statusProduk = status,
             createdAt = System.currentTimeMillis().toString(),
             updateAt = System.currentTimeMillis().toString()
         )

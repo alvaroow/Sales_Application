@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelProduk
 import com.google.android.material.chip.Chip
+import java.text.NumberFormat
+import java.util.Locale
 
 class AdapterProduk(
     private val produkList: List<ModelProduk>
@@ -22,19 +24,17 @@ class AdapterProduk(
         fun onStatusClick(produk: ModelProduk)
     }
 
-    // ✅ Tambahan Interface buat Hapus
+
     interface OnItemLongClickListener {
         fun onItemLongClick(produk: ModelProduk)
     }
 
     private var listener: OnItemClickListener? = null
     private var statusListener: OnStatusClickListener? = null
-    // ✅ Tambahan Listener buat Hapus
     private var longListener: OnItemLongClickListener? = null
 
     fun setOnItemClickListener(l: OnItemClickListener) { listener = l }
     fun setOnStatusClickListener(l: OnStatusClickListener) { statusListener = l }
-    // ✅ Tambahan Setter buat Hapus
     fun setOnItemLongClickListener(l: OnItemLongClickListener) { longListener = l }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,9 +63,12 @@ class AdapterProduk(
         fun bind(p: ModelProduk) {
 
             tvNama.text = p.namaProduk
-            tvHarga.text = "Rp ${p.hargaProduk}"
+            
+            val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+            tvHarga.text = formatRupiah.format(p.hargaProduk ?: 0)
+                .replace("Rp", "Rp ")
+                .replace(",00", "")
 
-            // ✅ LOGIKA STOK TAK TERBATAS
             if (p.stokProduk == 0) {
                 tvStok.text = "Stok: Tak Terbatas"
             } else {
@@ -75,7 +78,6 @@ class AdapterProduk(
             tvKategori.text = "Kategori: ${p.idKategori}"
             tvCabang.text = "Cabang: ${p.idCabang}"
 
-            // ... (lanjutan kode lainnya tetap sama)
 
             val status = p.statusProduk ?: "Aktif"
             chipStatus.text = status

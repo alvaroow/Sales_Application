@@ -4,112 +4,157 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/bg_surface"> <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="14dp">
+    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="4dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/bg_surface"
+    app:strokeWidth="1dp"
+    app:strokeColor="#F1F5F9">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/iconCart"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        app:cardCornerRadius="14dp"
-        app:cardBackgroundColor="@color/bg_app"
-        app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="12dp"
-            android:src="@drawable/product"
-            app:tint="@color/text_main"/>
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/tvNamaCart"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nama Produk"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/text_main"
-        android:layout_marginStart="12dp"
-        app:layout_constraintStart_toEndOf="@id/iconCart"
-        app:layout_constraintTop_toTopOf="@id/iconCart"
-        app:layout_constraintEnd_toStartOf="@id/tvHargaCart"/>
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvHargaCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rp 0"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvNamaCart"/>
+        <!-- Gambar / Ikon Produk -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/iconCart"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#F8FAFC"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/tvQty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Qty: 1"
-        android:textSize="12sp"
-        android:textColor="@color/text_secondary"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toStartOf="@id/tvNamaCart"
-        app:layout_constraintTop_toBottomOf="@id/tvNamaCart"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="18dp"
+                android:src="@drawable/cart"
+                app:tint="@color/primary"/>
+        </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        android:id="@+id/actionRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@id/tvNamaCart"
-        app:layout_constraintTop_toBottomOf="@id/tvQty">
+        <!-- Informasi Produk -->
+        <LinearLayout
+            android:id="@+id/infoContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintStart_toEndOf="@id/iconCart"
+            app:layout_constraintTop_toTopOf="@id/iconCart"
+            app:layout_constraintEnd_toStartOf="@id/deleteContainer">
 
-        <TextView
-            android:id="@+id/btnMinus"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:gravity="center"
-            android:text="−"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/red"
-            android:background="#FFE4E4"
-            android:layout_marginEnd="8dp"/>
+            <TextView
+                android:id="@+id/tvNamaCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Produk"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_main"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
-        <TextView
-            android:id="@+id/btnPlus"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:gravity="center"
-            android:text="+"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green"
-            android:background="#DCFCE7"
-            android:layout_marginEnd="10dp"/>
+            <TextView
+                android:id="@+id/tvHargaCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 0"
+                android:textSize="15sp"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"/>
 
-        <TextView
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:gravity="center"
-            android:text="Hapus"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="@color/red"
-            android:paddingHorizontal="14dp"/>
-    </LinearLayout>
+            <!-- Kontrol Quantity -->
+            <LinearLayout
+                android:id="@+id/layoutQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:padding="2dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#FEE2E2">
+                    <TextView
+                        android:id="@+id/btnMinus"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="−"
+                        android:gravity="center"
+                        android:textColor="@color/red"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tvQty"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_main"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#DCFCE7">
+                    <TextView
+                        android:id="@+id/btnPlus"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+"
+                        android:gravity="center"
+                        android:textColor="@color/green"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Tombol Hapus (Dibuat lebih besar dan lebih bagus) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/deleteContainer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#FFF1F2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/red"
+                android:contentDescription="Hapus Item"/>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

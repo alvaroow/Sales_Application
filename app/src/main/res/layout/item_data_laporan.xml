@@ -8,6 +8,9 @@
     android:layout_marginVertical="8dp"
     app:cardCornerRadius="18dp"
     app:cardElevation="2dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/bg_surface"> <!-- Warna Background Adaptif -->
 
     <androidx.constraintlayout.widget.ConstraintLayout

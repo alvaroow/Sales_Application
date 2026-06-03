@@ -14,12 +14,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.NumberFormat
+import java.util.Locale
 
 class CheckoutActivity : AppCompatActivity() {
 
     private lateinit var tvTotal: TextView
     private lateinit var tvKembalian: TextView
     private lateinit var etBayar: EditText
+    private lateinit var etNamaPemesan: EditText
     private lateinit var btnBayar: MaterialButton
 
     private var total = 0
@@ -31,15 +34,21 @@ class CheckoutActivity : AppCompatActivity() {
         tvTotal = findViewById(R.id.tvTotalBayar)
         tvKembalian = findViewById(R.id.tvKembalian)
         etBayar = findViewById(R.id.etBayar)
+        etNamaPemesan = findViewById(R.id.etNamaPemesan)
         btnBayar = findViewById(R.id.btnBayar)
 
         total = CartManager.getTotal()
-        tvTotal.text = "Rp $total"
+        
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+        tvTotal.text = formatRupiah.format(total)
+            .replace("Rp", "Rp ")
+            .replace(",00", "")
 
         val namaKasir = intent.getStringExtra("NAMA_KASIR") ?: "Kasir Default"
 
         btnBayar.setOnClickListener {
             val bayar = etBayar.text.toString().toIntOrNull() ?: 0
+            val namaPemesan = etNamaPemesan.text.toString().trim().ifEmpty { "-" }
 
             if (bayar < total) {
                 Toast.makeText(this, "Uang kurang", Toast.LENGTH_SHORT).show()
@@ -56,7 +65,8 @@ class CheckoutActivity : AppCompatActivity() {
                 kembalian = kembalian,
                 tanggal = System.currentTimeMillis(),
                 items = CartManager.getAll().map { it.copy() },
-                namaKasir = namaKasir
+                namaKasir = namaKasir,
+                namaPemesan = namaPemesan
             )
 
             FirebaseDatabase.getInstance()
@@ -64,7 +74,7 @@ class CheckoutActivity : AppCompatActivity() {
                 .child(idTransaksi)
                 .setValue(transaksi)
                 .addOnSuccessListener {
-                    // ✅ PANGGIL FUNGSI PENGURANGAN STOK DI SINI
+
                     updateStokDiFirebase()
 
                     Toast.makeText(this, "Checkout berhasil", Toast.LENGTH_SHORT).show()

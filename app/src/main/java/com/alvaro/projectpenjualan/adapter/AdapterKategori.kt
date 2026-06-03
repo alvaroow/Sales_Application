@@ -15,7 +15,6 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
     private var listener: OnItemClickListener? = null
     private var statusListener: OnStatusClickListener? = null
 
-    // ✅ Tambahan: Kabel untuk menangkap Tekan Tahan (Hapus)
     private var longListener: OnItemLongClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -26,7 +25,7 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
         this.statusListener = listener
     }
 
-    // ✅ Tambahan: Setter untuk Tekan Tahan
+
     fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
         this.longListener = listener
     }
@@ -39,7 +38,6 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
         fun onStatusClick(kategori: ModelKategori)
     }
 
-    // ✅ Tambahan: Interface untuk Tekan Tahan
     interface OnItemLongClickListener {
         fun onItemLongClick(kategori: ModelKategori)
     }
@@ -83,7 +81,7 @@ class AdapterKategori(private val kategoriList: List<ModelKategori>) :
                 listener?.onItemClick(kategori)
             }
 
-            // ✅ Tambahan: Tekan tahan card (Untuk Hapus)
+
             itemView.setOnLongClickListener {
                 longListener?.onItemLongClick(kategori)
                 true // Wajib return true agar klik biasa tidak ikut terpanggil

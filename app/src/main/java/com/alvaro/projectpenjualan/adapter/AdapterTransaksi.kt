@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelProduk
 import com.google.android.material.chip.Chip
+import java.text.NumberFormat
+import java.util.Locale
 
 class AdapterTransaksi(
     private val list: List<ModelProduk>,
@@ -54,7 +56,6 @@ class AdapterTransaksi(
         private val tvStok =
             itemView.findViewById<TextView>(R.id.tvStokProduk)
 
-        // ✅ Tambahan: Inisialisasi Chip Status
         private val chipStatus =
             itemView.findViewById<Chip>(R.id.chipStatusProduk)
 
@@ -62,7 +63,10 @@ class AdapterTransaksi(
 
             tvNama.text = p.namaProduk
 
-            tvHarga.text = "Rp ${p.hargaProduk}"
+            val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+            tvHarga.text = formatRupiah.format(p.hargaProduk ?: 0)
+                .replace("Rp", "Rp ")
+                .replace(",00", "")
 
             tvKategori.text = "Kategori: ${p.idKategori}"
 
@@ -70,7 +74,6 @@ class AdapterTransaksi(
 
             tvStok.text = "Stok: ${p.stokProduk}"
 
-            // ✅ Tambahan: Logika warna Chip (Hanya tampilan, tidak bisa di-toggle)
             val status = p.statusProduk ?: "Aktif"
             chipStatus.text = status
 

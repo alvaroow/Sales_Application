@@ -20,13 +20,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.NumberFormat
+import java.util.Locale
 
 class BottomSheetCart : BottomSheetDialogFragment() {
 
     private lateinit var rv: RecyclerView
     private lateinit var tvTotal: TextView
     private lateinit var btnCheckout: MaterialButton
-    private lateinit var spKasir: MaterialAutoCompleteTextView // ✅ Variabel Kasir
+    private lateinit var spKasir: MaterialAutoCompleteTextView
     private lateinit var adapter: AdapterCart
 
     override fun onCreateView(
@@ -40,7 +42,7 @@ class BottomSheetCart : BottomSheetDialogFragment() {
         rv = view.findViewById(R.id.rvCart)
         tvTotal = view.findViewById(R.id.tvTotal)
         btnCheckout = view.findViewById(R.id.btnCheckout)
-        spKasir = view.findViewById(R.id.spKasir) // ✅ Inisialisasi
+        spKasir = view.findViewById(R.id.spKasir)
 
         //  Panggil Data Kasir dari Firebase
         loadKasir()
@@ -129,7 +131,12 @@ class BottomSheetCart : BottomSheetDialogFragment() {
     }
 
     private fun refresh() {
-        tvTotal.text = "Total: Rp ${CartManager.getTotal()}"
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+        val totalFormatted = formatRupiah.format(CartManager.getTotal())
+            .replace("Rp", "Rp ")
+            .replace(",00", "")
+            
+        tvTotal.text = "Total: $totalFormatted"
         adapter.notifyDataSetChanged()
     }
 

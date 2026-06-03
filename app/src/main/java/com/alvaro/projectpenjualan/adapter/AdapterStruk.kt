@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelCart
+import java.text.NumberFormat
+import java.util.Locale
 
 class AdapterStruk(
     private val list: List<ModelCart>
@@ -34,7 +36,11 @@ class AdapterStruk(
         holder.tvQty.text = "${item.qty}x"
 
         // Kalkulasi subtotal
-        val subtotal = item.qty * item.produk.hargaProduk!!
-        holder.tvSubtotal.text = "Rp $subtotal"
+        val subtotal = item.qty * (item.produk.hargaProduk ?: 0)
+        
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+        holder.tvSubtotal.text = formatRupiah.format(subtotal)
+            .replace("Rp", "Rp ")
+            .replace(",00", "")
     }
 }

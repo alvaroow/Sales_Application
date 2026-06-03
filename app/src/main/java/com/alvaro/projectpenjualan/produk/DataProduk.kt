@@ -20,12 +20,14 @@ class DataProduk : AppCompatActivity() {
     private val viewModel: DataProdukViewModel by viewModels()
     private lateinit var rvDATAPRODUK: RecyclerView
     private lateinit var fabDATAPRODUKTambah: FloatingActionButton
+    private lateinit var svProduk: android.widget.SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_produk)
 
         init()
+        setupSearchView()
 
         rvDATAPRODUK.layoutManager = LinearLayoutManager(this)
         rvDATAPRODUK.setHasFixedSize(true)
@@ -34,7 +36,7 @@ class DataProduk : AppCompatActivity() {
             val adapter = AdapterProduk(list)
             rvDATAPRODUK.adapter = adapter
 
-            // ✅ 1. FUNGSI EDIT (KLIK BIASA)
+
             adapter.setOnItemClickListener(object : AdapterProduk.OnItemClickListener {
                 override fun onItemClick(produk: ModelProduk) {
                     val intent = Intent(this@DataProduk, ModProduk::class.java)
@@ -50,7 +52,7 @@ class DataProduk : AppCompatActivity() {
                 }
             })
 
-            // ✅ 2. FUNGSI HAPUS (TEKAN TAHAN)
+
             adapter.setOnItemLongClickListener(object : AdapterProduk.OnItemLongClickListener {
                 override fun onItemLongClick(produk: ModelProduk) {
                     AlertDialog.Builder(this@DataProduk)
@@ -69,7 +71,7 @@ class DataProduk : AppCompatActivity() {
                 }
             })
 
-            // ✅ 3. FUNGSI UBAH STATUS
+
             adapter.setOnStatusClickListener(object : AdapterProduk.OnStatusClickListener {
                 override fun onStatusClick(produk: ModelProduk) {
                     viewModel.toggleStatus(produk)
@@ -81,9 +83,23 @@ class DataProduk : AppCompatActivity() {
     private fun init() {
         rvDATAPRODUK = findViewById(R.id.rvDATA_PRODUK)
         fabDATAPRODUKTambah = findViewById(R.id.fabDATA_PRODUK_Tambah)
+        svProduk = findViewById(R.id.svProduk)
 
         fabDATAPRODUKTambah.setOnClickListener {
             startActivity(Intent(this, ModProduk::class.java))
         }
+    }
+
+    private fun setupSearchView() {
+        svProduk.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchProduk(newText ?: "")
+                return true
+            }
+        })
     }
 }

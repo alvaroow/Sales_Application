@@ -3,11 +3,14 @@ package com.alvaro.projectpenjualan.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alvaro.projectpenjualan.R
 import com.alvaro.projectpenjualan.model.ModelCart
 import com.alvaro.projectpenjualan.model.ModelProduk
+import java.text.NumberFormat
+import java.util.Locale
 
 class AdapterCart(
     private val list: List<ModelCart>,
@@ -36,12 +39,17 @@ class AdapterCart(
 
         private val btnPlus = itemView.findViewById<TextView>(R.id.btnPlus)
         private val btnMinus = itemView.findViewById<TextView>(R.id.btnMinus)
-        private val btnDelete = itemView.findViewById<TextView>(R.id.btnDelete)
+        private val btnDelete = itemView.findViewById<ImageButton>(R.id.btnDelete)
 
         fun bind(item: ModelCart) {
 
             tvNama.text = item.produk.namaProduk
-            tvHarga.text = "Rp ${item.produk.hargaProduk}"
+            
+            val formatRupiah = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+            tvHarga.text = formatRupiah.format(item.produk.hargaProduk ?: 0)
+                .replace("Rp", "Rp ")
+                .replace(",00", "")
+
             tvQty.text = "Qty: ${item.qty}"
 
             btnPlus.setOnClickListener {
